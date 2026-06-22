@@ -13,6 +13,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.weapon = null;
     this.attackCooldown = 0;
     this.invincible = 0;
+    this._lastDir = { x: 0, y: -1 }; // fallback aim direction for mobile fire
 
     this.keys = scene.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -24,14 +25,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   update(time, delta) {
     const { up, down, left, right } = this.keys;
+    const mi = window.mobileInput || {};
     let vx = 0, vy = 0;
-    if (left.isDown)  vx = -this.speed;
-    if (right.isDown) vx =  this.speed;
-    if (up.isDown)    vy = -this.speed;
-    if (down.isDown)  vy =  this.speed;
+    if (left.isDown  || mi.left)  vx = -this.speed;
+    if (right.isDown || mi.right) vx =  this.speed;
+    if (up.isDown    || mi.up)    vy = -this.speed;
+    if (down.isDown  || mi.down)  vy =  this.speed;
 
     if (vx !== 0 && vy !== 0) { vx *= 0.707; vy *= 0.707; }
     this.setVelocity(vx, vy);
+
+    // Track last movement direction so mobile fire has a fallback aim
+    if (vx !== 0 || vy !== 0) this._lastDir = { x: vx, y: vy };
 
     if (this.attackCooldown > 0) this.attackCooldown -= delta;
     if (this.invincible > 0) {

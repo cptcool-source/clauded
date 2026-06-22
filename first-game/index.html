@@ -2,18 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Survival Game</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       background: #050508;
-      display: flex; justify-content: center; align-items: center;
-      height: 100vh; overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100dvh;
+      overflow-y: auto;
     }
-    canvas { display: block; image-rendering: pixelated; }
+
+    /* Game canvas container — Phaser injects canvas here */
+    #game-wrapper {
+      width: min(800px, 100vw);
+      aspect-ratio: 800 / 600;
+      flex-shrink: 0;
+    }
+
+    #game-wrapper canvas {
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    /* CRT scanlines */
     body::after {
       content: '';
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -25,10 +43,168 @@
       pointer-events: none;
       z-index: 9999;
     }
+
+    /* ── On-screen gamepad controls ────────────────────── */
+    #controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: min(800px, 100vw);
+      padding: 16px 40px;
+      background: #0a0a10;
+      border-top: 2px solid #1a1a2e;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    /* D-pad: 3×3 grid with buttons at cardinal positions */
+    #dpad {
+      display: grid;
+      grid-template-areas: '. up .' 'left . right' '. down .';
+      grid-template-columns: repeat(3, 62px);
+      grid-template-rows: repeat(3, 62px);
+      gap: 4px;
+    }
+
+    #dpad button {
+      background: #0d0d1f;
+      border: 2px solid #007722;
+      color: #00ff44;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #dpad button:active,
+    #dpad button.pressed {
+      background: #002a12;
+      border-color: #44ff88;
+      color: #88ffaa;
+    }
+
+    #btn-up    { grid-area: up; }
+    #btn-left  { grid-area: left; }
+    #btn-right { grid-area: right; }
+    #btn-down  { grid-area: down; }
+
+    /* Fire button */
+    #fire-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #btn-fire {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #1a0000;
+      border: 3px solid #cc2222;
+      color: #ff4444;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      line-height: 1.5;
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #btn-fire:active,
+    #btn-fire.pressed {
+      background: #3a0000;
+      border-color: #ff6666;
+      color: #ff8888;
+    }
   </style>
 </head>
 <body>
+
+  <div id="game-wrapper"></div>
+
+  <div id="controls">
+    <div id="dpad">
+      <button id="btn-up">▲</button>
+      <button id="btn-left">◄</button>
+      <button id="btn-right">►</button>
+      <button id="btn-down">▼</button>
+    </div>
+    <div id="fire-wrap">
+      <button id="btn-fire">FIRE</button>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
   <script type="module" src="src/main.js"></script>
+
+  <script>
+    // ── Mobile input bridge ──────────────────────────────────────────────────
+    // Game code reads window.mobileInput each frame alongside keyboard/mouse.
+    // Fire callbacks are queued so CombatScene handles them in its own update().
+    window.mobileInput      = { up: false, down: false, left: false, right: false, fire: false };
+    window.mobileFireStart  = null;  // assigned by CombatScene.create()
+    window.mobileFireRelease = null; // assigned by CombatScene.create()
+
+    function bindDir(id, key) {
+      const el = document.getElementById(id);
+      el.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        window.mobileInput[key] = true;
+        el.classList.add('pressed');
+      }, { passive: false });
+      el.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        window.mobileInput[key] = false;
+        el.classList.remove('pressed');
+      }, { passive: false });
+      el.addEventListener('touchcancel', (e) => {
+        e.preventDefault();
+        window.mobileInput[key] = false;
+        el.classList.remove('pressed');
+      }, { passive: false });
+      el.addEventListener('mousedown',  () => { window.mobileInput[key] = true; });
+      el.addEventListener('mouseup',    () => { window.mobileInput[key] = false; });
+      el.addEventListener('mouseleave', () => { window.mobileInput[key] = false; });
+    }
+
+    bindDir('btn-up',    'up');
+    bindDir('btn-down',  'down');
+    bindDir('btn-left',  'left');
+    bindDir('btn-right', 'right');
+
+    // Fire button calls CombatScene callbacks so quick taps aren't missed
+    const fireBtn = document.getElementById('btn-fire');
+
+    function onFireStart(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      window.mobileInput.fire = true;
+      fireBtn.classList.add('pressed');
+      if (typeof window.mobileFireStart === 'function') window.mobileFireStart();
+    }
+    function onFireEnd(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      window.mobileInput.fire = false;
+      fireBtn.classList.remove('pressed');
+      if (typeof window.mobileFireRelease === 'function') window.mobileFireRelease();
+    }
+
+    fireBtn.addEventListener('touchstart',  onFireStart, { passive: false });
+    fireBtn.addEventListener('touchend',    onFireEnd,   { passive: false });
+    fireBtn.addEventListener('touchcancel', onFireEnd,   { passive: false });
+    fireBtn.addEventListener('mousedown',   onFireStart);
+    fireBtn.addEventListener('mouseup',     onFireEnd);
+    fireBtn.addEventListener('mouseleave',  onFireEnd);
+  </script>
 </body>
 </html>

@@ -48,6 +48,19 @@ export default class CombatScene extends Phaser.Scene {
     // Freeze-frame state
     this._frozen = false;
 
+    // Mobile fire state (queued from DOM touch events in index.html)
+    this._pendingMobileStart   = false;
+    this._pendingMobileRelease = false;
+    this._isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    // Register callbacks so the fire button works even on quick taps
+    window.mobileFireStart   = () => { this._pendingMobileStart   = true; };
+    window.mobileFireRelease = () => { this._pendingMobileRelease = true; };
+    this.events.once('shutdown', () => {
+      window.mobileFireStart   = null;
+      window.mobileFireRelease = null;
+    });
+
     this._buildHUD();
     this.input.setDefaultCursor('none');
     this.crosshair = this.add.graphics().setDepth(30);
@@ -182,11 +195,25 @@ export default class CombatScene extends Phaser.Scene {
   }
 
   _releaseCharge() {
+    const ptr = this.input.activePointer;
+    this._releaseChargeAt(ptr.x, ptr.y);
+  }
+
+  _releaseChargeAt(tx, ty) {
     if (!this._isCharging) return;
     this._isCharging = false;
     if (this._dead || !this.player.canAttack()) return;
-    const ptr = this.input.activePointer;
-    this._fireCharged(ptr.x, ptr.y);
+    this._fireCharged(tx, ty);
+  }
+
+  _getNearestEnemy() {
+    let nearest = null, minDist = Infinity;
+    this.enemies.getChildren().forEach(e => {
+      if (!e.active) return;
+      const d = Phaser.Math.Distance.Between(this.player.x, this.player.y, e.x, e.y);
+      if (d < minDist) { minDist = d; nearest = e; }
+    });
+    return nearest;
   }
 
   _fireCharged(screenX, screenY) {
@@ -437,22 +464,46 @@ export default class CombatScene extends Phaser.Scene {
 
     // During freeze-frame: skip all game updates, just redraw crosshair
     if (this._frozen) {
-      this._drawCrosshair();
+      if (!this._isTouchDevice) this._drawCrosshair();
       return;
+    }
+
+    // Process queued mobile fire actions (queued by DOM touch events)
+    if (this._pendingMobileStart) {
+      this._pendingMobileStart = false;
+      if (!this._dead) this._startCharge();
+    }
+    if (this._pendingMobileRelease) {
+      this._pendingMobileRelease = false;
+      const t  = this._getNearestEnemy();
+      const ld = this.player._lastDir || { x: 0, y: -1 };
+      this._releaseChargeAt(
+        t ? t.x : this.player.x + ld.x * 100,
+        t ? t.y : this.player.y + ld.y * 100
+      );
     }
 
     this.player.update(time, delta);
 
-    const ptr = this.input.activePointer;
-    this.player.setRotation(
-      Math.atan2(ptr.y - this.player.y, ptr.x - this.player.x) + Math.PI / 2
-    );
+    // Rotate player: face nearest enemy when fire held on mobile, else face cursor
+    const ptr       = this.input.activePointer;
+    const aimTarget = window.mobileInput?.fire ? this._getNearestEnemy() : null;
+    if (aimTarget) {
+      this.player.setRotation(
+        Math.atan2(aimTarget.y - this.player.y, aimTarget.x - this.player.x) + Math.PI / 2
+      );
+    } else {
+      this.player.setRotation(
+        Math.atan2(ptr.y - this.player.y, ptr.x - this.player.x) + Math.PI / 2
+      );
+    }
 
     this.enemies.getChildren().forEach(e => { if (e.active) e.update(time, delta, this.player); });
 
     if (this.player.isDead()) this._playerDied();
 
-    this._drawCrosshair();
+    // Crosshair only on non-touch devices (no cursor to track on mobile)
+    if (!this._isTouchDevice) this._drawCrosshair();
     this._updateHUD();
   }
 
