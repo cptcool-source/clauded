@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Geist+Mono:wght@500&family=Crete+Round&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* Fixed canvas — screenshot this at full page size */
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #09091F;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .canvas {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 88px;
+  }
+
+  /* Ambient orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .orb-1 {
+    width: 700px; height: 600px;
+    background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 70%);
+    filter: blur(80px);
+    left: -120px; top: -140px;
+  }
+  .orb-2 {
+    width: 480px; height: 380px;
+    background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 70%);
+    filter: blur(70px);
+    right: -40px; top: 20px;
+  }
+  .orb-3 {
+    width: 360px; height: 320px;
+    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
+    filter: blur(60px);
+    right: 80px; bottom: -60px;
+  }
+
+  /* fIT logo mark — top right */
+  .mark {
+    position: absolute;
+    top: 52px;
+    right: 88px;
+    width: 80px;
+    height: 80px;
+    background: #6366F1;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Crete Round', Georgia, serif;
+    font-size: 37px;
+    color: #fff;
+    letter-spacing: -1px;
+  }
+
+  /* Bottom domain */
+  .domain {
+    position: absolute;
+    bottom: 50px;
+    right: 88px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5A5690;
+  }
+
+  /* Content */
+  .eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #818CF8;
+    margin-bottom: 32px;
+  }
+
+  .headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 104px;
+    line-height: 0.9;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-bottom: 36px;
+  }
+
+  .headline .accent {
+    color: #F59E0B;
+  }
+
+  .rule {
+    width: 320px;
+    height: 1px;
+    background: #F59E0B;
+    box-shadow: 0 0 14px rgba(245,158,11,0.65);
+    margin-bottom: 32px;
+  }
+
+  .sub {
+    font-family: 'Geist Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8880C4;
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="mark">fIT</div>
+    <p class="domain">fixedittech.com</p>
+
+    <p class="eyebrow">fixedIT Tech &nbsp;·&nbsp; North Port, FL 34291</p>
+    <h1 class="headline">Designs made<br>to <span class="accent">lead.</span></h1>
+    <div class="rule"></div>
+    <p class="sub">Web Design &nbsp;·&nbsp; Development &nbsp;·&nbsp; SEO &nbsp;·&nbsp; Southwest Florida</p>
+  </div>
+</body>
+</html>

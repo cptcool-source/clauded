@@ -1,6 +1,6 @@
 /* ==========================================================================
    fixedIT Tech — main.js
-   Nav scroll state · Mobile drawer · Scroll reveals · Process animation · Form
+   Nav · Mobile drawer · Scroll reveals · Process animation · Form · Cursor · Parallax
    ========================================================================== */
 
 (function () {
@@ -44,12 +44,10 @@
     }
   });
 
-  /* Close drawer when any drawer link is clicked */
   drawer.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', closeDrawer);
   });
 
-  /* Close drawer on Escape */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
   });
@@ -83,7 +81,6 @@
       revealObs.observe(el);
     });
   } else {
-    /* Fallback: just show everything */
     revealEls.forEach(function (el) {
       el.classList.add('visible');
     });
@@ -98,11 +95,7 @@
   function activateProcess() {
     if (procFired) return;
     procFired = true;
-
-    /* Draw the line */
     if (procFill) procFill.style.width = '100%';
-
-    /* Stagger-activate each step */
     procSteps.forEach(function (step, i) {
       setTimeout(function () {
         step.classList.add('proc-active');
@@ -127,34 +120,56 @@
   var submitBtn  = document.getElementById('submit-btn');
   var statusEl   = document.getElementById('form-status');
 
+  function validateField(field) {
+    var group  = field.closest('.form-group');
+    var errEl  = group ? group.querySelector('.field-error') : null;
+    var msg    = '';
+    if (field.required && !field.value.trim()) {
+      msg = 'This field is required.';
+    } else if (field.type === 'email' && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+      msg = 'Enter a valid email address.';
+    }
+    if (group) group.classList.toggle('has-error', !!msg);
+    if (errEl) errEl.textContent = msg;
+    return !msg;
+  }
+
   if (form) {
+    form.querySelectorAll('[required], [type="email"]').forEach(function (field) {
+      field.addEventListener('blur', function () { validateField(field); });
+      field.addEventListener('input', function () {
+        if (field.closest('.form-group').classList.contains('has-error')) validateField(field);
+      });
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      var valid = true;
+      form.querySelectorAll('[required], [type="email"]').forEach(function (field) {
+        if (!validateField(field)) valid = false;
+      });
+      if (!valid) { statusEl.textContent = ''; statusEl.className = 'form-status'; return; }
 
-      /* Check if Formspree ID has been replaced */
       var action = form.getAttribute('action');
       if (action.indexOf('REPLACE_WITH_YOUR_FORM_ID') !== -1) {
         statusEl.textContent = 'Form not yet configured — contact temptestbspivey@gmail.com directly.';
         statusEl.className = 'form-status error';
         return;
       }
-
       var btnLabel = submitBtn.querySelector('.btn-label');
       if (btnLabel) btnLabel.textContent = 'Sending…';
       submitBtn.disabled = true;
       statusEl.textContent = '';
       statusEl.className = 'form-status';
 
-      var data = new FormData(form);
-
       fetch(action, {
         method: 'POST',
-        body: data,
+        body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       })
         .then(function (res) {
           if (res.ok) {
-            statusEl.textContent = "Message sent — Charles will be in touch within 24 hours.";
+            statusEl.textContent = 'Message sent — Charles will be in touch within 24 hours.';
             statusEl.className = 'form-status success';
             form.reset();
             if (btnLabel) btnLabel.textContent = 'Send message';
@@ -174,25 +189,11 @@
     });
   }
 
-  /* ── Theme switcher ─────────────────────────────────────────────────────── */
-  var themeButtons = document.querySelectorAll('[data-theme-btn]');
-  themeButtons.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var theme = btn.getAttribute('data-theme-btn');
-      document.documentElement.setAttribute('data-theme', theme);
-      themeButtons.forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      /* Re-trigger hero animations on switch */
-      var title = document.querySelector('.hero-title');
-      var rule  = document.querySelector('.hero-rule');
-      [title, rule].forEach(function (el) {
-        if (!el) return;
-        el.style.animation = 'none';
-        el.offsetHeight; /* force reflow */
-        el.style.animation = '';
-      });
-    });
-  });
+  /* ── Theme: URL param override for client demos (?theme=b or ?theme=c) ───── */
+  var urlTheme = new URLSearchParams(window.location.search).get('theme');
+  if (urlTheme && ['a', 'b', 'c'].indexOf(urlTheme) !== -1) {
+    document.documentElement.setAttribute('data-theme', urlTheme);
+  }
 
   /* ── Active nav link on scroll ───────────────────────────────────────────── */
   var sections  = document.querySelectorAll('main section[id]');
@@ -213,5 +214,109 @@
 
   window.addEventListener('scroll', updateActiveLink, { passive: true });
   updateActiveLink();
+
+  /* ── Lightbox ───────────────────────────────────────────────────────────── */
+  var lightbox         = document.getElementById('lightbox');
+  var lightboxImg      = document.getElementById('lightbox-img');
+  var lightboxClose    = document.getElementById('lightbox-close');
+  var lightboxBackdrop = document.getElementById('lightbox-backdrop');
+  var lbScale = 1;
+  var lbMin   = 1;
+  var lbMax   = 4;
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lbScale = 1;
+    lightboxImg.style.transform = 'scale(1)';
+    lightboxImg.style.cursor = 'zoom-in';
+    lightbox.removeAttribute('inert');
+    lightbox.setAttribute('aria-hidden', 'false');
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.setAttribute('inert', '');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-lightbox-src]').forEach(function (card) {
+    card.addEventListener('click', function () {
+      openLightbox(card.dataset.lightboxSrc, card.dataset.lightboxAlt || '');
+    });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(card.dataset.lightboxSrc, card.dataset.lightboxAlt || '');
+      }
+    });
+  });
+
+  lightboxBackdrop.addEventListener('click', closeLightbox);
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+
+  lightbox.addEventListener('wheel', function (e) {
+    if (!lightbox.classList.contains('open')) return;
+    e.preventDefault();
+    lbScale = Math.min(lbMax, Math.max(lbMin, lbScale + (e.deltaY < 0 ? 0.2 : -0.2)));
+    lightboxImg.style.transform = 'scale(' + lbScale + ')';
+    lightboxImg.style.cursor = lbScale > 1 ? 'zoom-out' : 'zoom-in';
+  }, { passive: false });
+
+  lightboxImg.addEventListener('click', function (e) {
+    e.stopPropagation();
+    lbScale = lbScale > 1 ? 1 : 2.5;
+    lightboxImg.style.transform = 'scale(' + lbScale + ')';
+    lightboxImg.style.cursor = lbScale > 1 ? 'zoom-out' : 'zoom-in';
+  });
+
+  /* ── Hero parallax ───────────────────────────────────────────────────────── */
+  var heroPhoto = document.querySelector('.hero-photo');
+  if (heroPhoto && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    function handleParallax() {
+      var scrollY = window.scrollY;
+      if (scrollY > window.innerHeight) return;
+      heroPhoto.style.transform = 'translateY(' + (scrollY * 0.28) + 'px)';
+    }
+    window.addEventListener('scroll', handleParallax, { passive: true });
+  }
+
+  /* ── Portfolio rail: drag to scroll ─────────────────────────────────────── */
+  var rail = document.getElementById('portfolio-rail');
+  if (rail) {
+    var isDown   = false;
+    var startX   = 0;
+    var scrollLeft = 0;
+
+    rail.addEventListener('mousedown', function (e) {
+      isDown = true;
+      rail.classList.add('dragging');
+      startX     = e.pageX - rail.offsetLeft;
+      scrollLeft = rail.scrollLeft;
+    });
+    rail.addEventListener('mouseleave', function () {
+      isDown = false;
+      rail.classList.remove('dragging');
+    });
+    rail.addEventListener('mouseup', function () {
+      isDown = false;
+      rail.classList.remove('dragging');
+    });
+    rail.addEventListener('mousemove', function (e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x    = e.pageX - rail.offsetLeft;
+      var walk = (x - startX) * 1.5;
+      rail.scrollLeft = scrollLeft - walk;
+    });
+  }
 
 })();

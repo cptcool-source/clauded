@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction B — Cinematic Southwest</title>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #080B14;
+      --surface: #0E1220;
+      --lift:    #141828;
+      --text:    #F2EFE8;
+      --muted:   #8E887A;
+      --faint:   #4A4840;
+      --accent:  #F59E0B;
+      --accent-l:#FCD34D;
+      --border:  rgba(255,255,255,0.06);
+    }
+
+    body {
+      font-family: 'Satoshi', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 56px 48px;
+      max-width: 900px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,158,11,0.1);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .direction-name {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .direction-pitch {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 20px;
+    }
+
+    /* Swatches */
+    .swatches {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .swatch-block {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+    }
+    .swatch-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .swatch-hex {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--muted);
+    }
+
+    /* Type scale */
+    .type-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .type-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 24px;
+      align-items: baseline;
+    }
+    .type-meta {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--faint);
+      line-height: 1.5;
+      padding-top: 4px;
+    }
+
+    /* Hero mock */
+    .hero-mock {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mock::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(245,158,11,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .mock-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .mock-h1 {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .mock-h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .mock-sub {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 380px;
+      margin-bottom: 36px;
+    }
+    .mock-ctas {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-fill {
+      background: var(--accent);
+      color: #0D0B08;
+      font-family: 'Satoshi', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 8px;
+      border: none;
+      cursor: default;
+    }
+    .btn-ghost {
+      background: none;
+      color: var(--muted);
+      font-family: 'Satoshi', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 0;
+      border: none;
+      cursor: default;
+    }
+
+    /* Nav mock */
+    .nav-mock {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: rgba(14,18,32,0.85);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+    .nav-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--accent);
+      color: #0D0B08;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <span class="tag">Direction B</span>
+  <h1 class="direction-name">Cinematic Southwest</h1>
+  <p class="direction-pitch">Dark theme stays — but the indigo/purple is gone. Replaced with deep warm navy and amber as the primary accent. Satoshi reads warmer and more approachable than the current typeface pairing. The sunset photo would own the hero at full saturation.</p>
+
+  <hr class="rule">
+
+  <p class="section-label">Color Palette</p>
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#080B14;"></div>
+      <span class="swatch-name">Background</span>
+      <span class="swatch-hex">#080B14</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#0E1220; border:1px solid rgba(255,255,255,0.06);"></div>
+      <span class="swatch-name">Surface</span>
+      <span class="swatch-hex">#0E1220</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#141828; border:1px solid rgba(255,255,255,0.06);"></div>
+      <span class="swatch-name">Lift</span>
+      <span class="swatch-hex">#141828</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#F2EFE8;"></div>
+      <span class="swatch-name">Text</span>
+      <span class="swatch-hex">#F2EFE8</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#8E887A;"></div>
+      <span class="swatch-name">Muted</span>
+      <span class="swatch-hex">#8E887A</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#F59E0B;"></div>
+      <span class="swatch-name">Amber (Primary)</span>
+      <span class="swatch-hex">#F59E0B</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#FCD34D;"></div>
+      <span class="swatch-name">Amber Light</span>
+      <span class="swatch-hex">#FCD34D</span>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <p class="section-label">Typography — Satoshi</p>
+  <div class="type-rows">
+    <div class="type-row">
+      <span class="type-meta">700<br>72px / –0.04em</span>
+      <span style="font-size:72px; font-weight:700; letter-spacing:-0.04em; line-height:0.94;">Designs made to lead.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">500<br>32px / –0.02em</span>
+      <span style="font-size:32px; font-weight:500; letter-spacing:-0.02em; line-height:1.1;">Everything your site needs to win.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">400<br>16px / 1.65lh</span>
+      <span style="font-size:16px; font-weight:400; color:#8E887A; line-height:1.65; max-width:480px; display:block;">fixedIT Tech builds websites that get local businesses in Southwest Florida found, chosen, and called.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">700<br>10px / +0.14em</span>
+      <span style="font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#F59E0B;">Web Design · North Port, FL 34291</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">700<br>13px CTA</span>
+      <button class="btn-fill" style="cursor:default; pointer-events:none;">Get a free quote</button>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <p class="section-label">Composition Preview</p>
+  <div class="nav-mock">
+    <span class="nav-logo">fixed<span>IT</span> Tech</span>
+    <div class="nav-links">
+      <span class="nav-link">Services</span>
+      <span class="nav-link">Our Work</span>
+      <span class="nav-link">About</span>
+    </div>
+    <span class="nav-cta">Get a free quote</span>
+  </div>
+
+  <div class="hero-mock">
+    <p class="mock-eyebrow">Web Design · North Port, FL 34291</p>
+    <h2 class="mock-h1">Designs made<br>to <em>lead.</em></h2>
+    <p class="mock-sub">fixedIT Tech builds websites that get local businesses in Southwest Florida found, chosen, and called.</p>
+    <div class="mock-ctas">
+      <button class="btn-fill">Get a free quote</button>
+      <button class="btn-ghost">See our work &rarr;</button>
+    </div>
+  </div>
+
+</body>
+</html>

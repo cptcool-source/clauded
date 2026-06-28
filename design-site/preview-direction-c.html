@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction C — Minimalist Challenger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FAFAF8;
+      --surface: #F2F0ED;
+      --text:    #111111;
+      --muted:   #6B6965;
+      --faint:   #BBBAB6;
+      --accent:  #E05C3A;
+      --accent-d:#B84928;
+      --border:  rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 56px 48px;
+      max-width: 900px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-d);
+      background: rgba(224,92,58,0.08);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .direction-name {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .direction-pitch {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 20px;
+    }
+
+    /* Swatches */
+    .swatches {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .swatch-block {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+    }
+    .swatch-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .swatch-hex {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--muted);
+    }
+
+    /* Type scale */
+    .type-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .type-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 24px;
+      align-items: baseline;
+    }
+    .type-meta {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--faint);
+      line-height: 1.5;
+      padding-top: 4px;
+    }
+
+    /* Hero mock */
+    .hero-mock {
+      background: var(--text);
+      border-radius: 16px;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mock::before {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(224,92,58,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .mock-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+    .mock-h1 {
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: #FAFAF8;
+      margin-bottom: 24px;
+    }
+    .mock-h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+    .mock-sub {
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      max-width: 380px;
+      margin-bottom: 36px;
+    }
+    .mock-ctas {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-fill {
+      background: var(--accent);
+      color: #FAFAF8;
+      font-family: 'Outfit', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 6px;
+      border: none;
+      cursor: default;
+    }
+    .btn-ghost {
+      background: none;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Outfit', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 0;
+      border: none;
+      cursor: default;
+    }
+
+    /* Nav mock */
+    .nav-mock {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+    .nav-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--accent);
+      color: #FAFAF8;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    /* Weight comparison strip */
+    .weight-strip {
+      display: flex;
+      gap: 0;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .weight-demo {
+      font-size: 52px;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-right: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <span class="tag">Direction C</span>
+  <h1 class="direction-name">Minimalist Challenger</h1>
+  <p class="direction-pitch">Full light mode. Coral replaces amber entirely — a single, memorable accent. Outfit's variable weight range lets display text go ultra-heavy while body copy stays light. No other local web designer in Southwest FL looks like this.</p>
+
+  <hr class="rule">
+
+  <p class="section-label">Color Palette</p>
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#FAFAF8; border:1px solid rgba(0,0,0,0.10);"></div>
+      <span class="swatch-name">Background</span>
+      <span class="swatch-hex">#FAFAF8</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#F2F0ED; border:1px solid rgba(0,0,0,0.08);"></div>
+      <span class="swatch-name">Surface</span>
+      <span class="swatch-hex">#F2F0ED</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#111111;"></div>
+      <span class="swatch-name">Text / Dark</span>
+      <span class="swatch-hex">#111111</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#6B6965;"></div>
+      <span class="swatch-name">Muted</span>
+      <span class="swatch-hex">#6B6965</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#BBBAB6;"></div>
+      <span class="swatch-name">Faint</span>
+      <span class="swatch-hex">#BBBAB6</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#E05C3A;"></div>
+      <span class="swatch-name">Coral (Primary)</span>
+      <span class="swatch-hex">#E05C3A</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#B84928;"></div>
+      <span class="swatch-name">Coral Dark</span>
+      <span class="swatch-hex">#B84928</span>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <p class="section-label">Typography — Outfit (Variable Weight)</p>
+  <div class="type-rows">
+    <div class="type-row">
+      <span class="type-meta">800<br>72px / –0.04em</span>
+      <span style="font-size:72px; font-weight:800; letter-spacing:-0.04em; line-height:0.94;">Designs made to lead.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">600<br>32px / –0.02em</span>
+      <span style="font-size:32px; font-weight:600; letter-spacing:-0.02em; line-height:1.1;">Everything your site needs to win.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">400<br>16px / 1.65lh</span>
+      <span style="font-size:16px; font-weight:400; color:#6B6965; line-height:1.65; max-width:480px; display:block;">fixedIT Tech builds websites that get local businesses in Southwest Florida found, chosen, and called.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">600<br>10px / +0.14em</span>
+      <span style="font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#BBBAB6;">Web Design · North Port, FL 34291</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">700<br>13px CTA</span>
+      <button class="btn-fill" style="cursor:default; pointer-events:none;">Get a free quote</button>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <p class="section-label">Outfit Weight Range (300 — 800)</p>
+  <div class="weight-strip">
+    <span class="weight-demo" style="font-weight:300; color:#BBBAB6;">Light</span>
+    <span class="weight-demo" style="font-weight:400; color:#6B6965;">Regular</span>
+    <span class="weight-demo" style="font-weight:600; color:#111111;">Semi</span>
+    <span class="weight-demo" style="font-weight:800; color:#111111;">Black</span>
+    <span class="weight-demo" style="font-weight:800; color:#E05C3A; font-style:italic;">lead.</span>
+  </div>
+
+  <hr class="rule">
+
+  <p class="section-label">Composition Preview</p>
+  <div class="nav-mock">
+    <span class="nav-logo">fixedIT Tech</span>
+    <div class="nav-links">
+      <span class="nav-link">Services</span>
+      <span class="nav-link">Our Work</span>
+      <span class="nav-link">About</span>
+    </div>
+    <span class="nav-cta">Get a free quote</span>
+  </div>
+
+  <div class="hero-mock">
+    <p class="mock-eyebrow">Web Design · North Port, FL 34291</p>
+    <h2 class="mock-h1">Designs made<br>to <em>lead.</em></h2>
+    <p class="mock-sub">fixedIT Tech builds websites that get local businesses in Southwest Florida found, chosen, and called.</p>
+    <div class="mock-ctas">
+      <button class="btn-fill">Get a free quote</button>
+      <button class="btn-ghost">See our work &rarr;</button>
+    </div>
+  </div>
+
+</body>
+</html>
