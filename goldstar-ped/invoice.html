@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice — Gold Star Pediatrics — fixedIT Tech</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:     #1C2B36;
+    --ink-soft:#3D5060;
+    --ink-muted: rgba(28,43,54,0.45);
+    --teal:    #2BA8A0;
+    --teal-dark:#1E8078;
+    --gold:    #E8A825;
+    --gold-dark:#C98A18;
+    --mist:    #EDF5F4;
+    --cream:   #FAF7F2;
+    --white:   #FFFFFF;
+    --border:  rgba(28,43,54,0.10);
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--cream);
+    padding: 2rem;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(28,43,54,0.10);
+  }
+
+  /* Header */
+  .inv-header {
+    background: var(--ink);
+    padding: 2.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .inv-brand { color: var(--white); }
+  .inv-brand .company {
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .inv-brand .company span { color: var(--gold); }
+  .inv-brand .tagline {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .inv-meta { text-align: right; }
+  .inv-meta .inv-label {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .inv-meta .inv-number {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.55);
+    margin-top: 0.35rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Info bar */
+  .inv-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    background: var(--mist);
+  }
+  .inv-info-block {
+    padding: 1.5rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+  .inv-info-block:last-child { border-right: none; }
+  .inv-info-block .label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    margin-bottom: 0.35rem;
+  }
+  .inv-info-block .value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .inv-info-block .sub {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-top: 0.15rem;
+  }
+
+  /* Body */
+  .inv-body { padding: 2.5rem 3rem; }
+
+  /* Parties */
+  .inv-parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .party-block .party-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin-bottom: 0.6rem;
+  }
+  .party-block .party-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  .party-block p {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* Line items */
+  .items-table { width: 100%; border-collapse: collapse; margin-bottom: 0; }
+  .items-table thead tr {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .items-table thead th {
+    padding: 0.75rem 1rem;
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: left;
+  }
+  .items-table thead th:last-child { text-align: right; }
+
+  .items-table tbody tr { border-bottom: 1px solid var(--border); }
+  .items-table tbody tr:last-child { border-bottom: none; }
+  .items-table tbody tr.primary-row { background: rgba(43,168,160,0.04); }
+
+  .items-table td { padding: 1.1rem 1rem; vertical-align: top; }
+  .items-table td:last-child { text-align: right; white-space: nowrap; }
+
+  .item-name {
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+  }
+  .item-desc {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .item-price {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .item-price.optional {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  /* Section separator */
+  .section-row td {
+    padding: 0.6rem 1rem 0.3rem;
+    background: var(--cream);
+  }
+  .section-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+  }
+
+  /* Totals */
+  .inv-totals {
+    margin-top: 0;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 2px solid var(--border);
+    padding-top: 1.25rem;
+  }
+  .totals-block { min-width: 280px; }
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0;
+    font-size: 0.875rem;
+  }
+  .total-row .t-label { color: var(--ink-soft); }
+  .total-row .t-val { font-weight: 600; color: var(--ink); }
+  .total-row.deposit {
+    border-top: 1px solid var(--border);
+    padding-top: 0.65rem;
+    margin-top: 0.35rem;
+  }
+  .total-row.deposit .t-label { color: var(--teal); font-weight: 600; }
+  .total-row.deposit .t-val { color: var(--teal); font-weight: 700; }
+  .total-row.grand {
+    background: var(--ink);
+    color: var(--white);
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    margin-top: 0.75rem;
+  }
+  .total-row.grand .t-label {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .total-row.grand .t-val {
+    color: var(--gold);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Payment terms */
+  .inv-terms {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .terms-block .terms-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin-bottom: 0.6rem;
+  }
+  .terms-block p, .terms-block li {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .terms-block ul { padding-left: 1rem; }
+
+  /* Footer */
+  .inv-footer {
+    background: var(--mist);
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .inv-footer p {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+  }
+  .inv-footer .thank-you {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  @media print {
+    body { padding: 0; background: white; }
+    .page { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="inv-header">
+    <div class="inv-brand">
+      <div class="company">fixed<span>IT</span> Tech</div>
+      <div class="tagline">Web Design &amp; Development · North Port, FL</div>
+    </div>
+    <div class="inv-meta">
+      <div class="inv-label">INVOICE</div>
+      <div class="inv-number"># GSP-2026-001</div>
+    </div>
+  </div>
+
+  <!-- Info bar -->
+  <div class="inv-info">
+    <div class="inv-info-block">
+      <div class="label">Invoice Date</div>
+      <div class="value">June 27, 2026</div>
+    </div>
+    <div class="inv-info-block">
+      <div class="label">Payment Due</div>
+      <div class="value">July 12, 2026</div>
+      <div class="sub">Net 15 · 50% deposit to begin</div>
+    </div>
+    <div class="inv-info-block">
+      <div class="label">Project</div>
+      <div class="value">Website Redesign</div>
+      <div class="sub">Gold Star Pediatrics</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="inv-body">
+
+    <!-- Parties -->
+    <div class="inv-parties">
+      <div class="party-block">
+        <div class="party-label">From</div>
+        <div class="party-name">fixedIT Tech</div>
+        <p>
+          Charles Spivey<br>
+          North Port, FL 34287<br>
+          bspivey212@gmail.com<br>
+          fixedITtech.com
+        </p>
+      </div>
+      <div class="party-block">
+        <div class="party-label">Bill To</div>
+        <div class="party-name">Gold Star Pediatrics, P.A.</div>
+        <p>
+          Dr. Jignesh Patel<br>
+          North Port, FL<br>
+          941-266-5629<br>
+          goldstarped.com
+        </p>
+      </div>
+    </div>
+
+    <!-- Line Items -->
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th style="width:60%">Description</th>
+          <th style="width:20%">Qty</th>
+          <th style="width:20%">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- Primary deliverable -->
+        <tr class="section-row"><td colspan="3"><span class="section-label">Core Deliverable</span></td></tr>
+
+        <tr class="primary-row">
+          <td>
+            <div class="item-name">Custom Website Design &amp; Development — 10 Pages</div>
+            <div class="item-desc">
+              Full custom build in HTML, CSS &amp; JavaScript — no templates, no CMS, no third-party platform. Includes:<br><br>
+              <strong>Pages:</strong> Home · About · Services · New Patients · Meet the Team · Policies · Patient Resources · Self Pay Options · Blog/News · Contact<br><br>
+              <strong>Design:</strong> Original brand design system (color tokens, typography pairing, component library), professional photography integration, mobile-first responsive layout, scroll animations, accessibility (ARIA/WCAG).<br><br>
+              <strong>Handoff:</strong> Full source code ownership transferred to client on final payment. No platform lock-in, no monthly licensing fees.
+            </div>
+          </td>
+          <td>1 project</td>
+          <td><span class="item-price">$4,500.00</span></td>
+        </tr>
+
+        <!-- Optional add-ons -->
+        <tr class="section-row"><td colspan="3"><span class="section-label">Optional Add-Ons (select as needed)</span></td></tr>
+
+        <tr>
+          <td>
+            <div class="item-name">Online Appointment Booking Integration</div>
+            <div class="item-desc">Embed and configure online scheduling (healow portal, Calendly, or equivalent) with branded styling across all relevant pages.</div>
+          </td>
+          <td>Optional</td>
+          <td><span class="item-price optional">+$650.00</span></td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="item-name">Patient Intake Forms (HIPAA-Safe Embed)</div>
+            <div class="item-desc">Configure and embed digital patient intake forms via a HIPAA-compliant platform (JotForm HIPAA, IntakeQ, or equivalent). Styled to match the site.</div>
+          </td>
+          <td>Optional</td>
+          <td><span class="item-price optional">+$400.00</span></td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="item-name">Google Business Profile + Local SEO Setup</div>
+            <div class="item-desc">Optimize Google Business listing, add structured data markup (schema.org) to site pages, configure meta titles/descriptions for all 10 pages, and submit sitemap to Google Search Console.</div>
+          </td>
+          <td>Optional</td>
+          <td><span class="item-price optional">+$400.00</span></td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="item-name">Annual Maintenance Retainer</div>
+            <div class="item-desc">Priority support for content updates, photo swaps, page edits, and minor additions. Up to 4 hours of work per year. Invoiced annually.</div>
+          </td>
+          <td>Optional / yr</td>
+          <td><span class="item-price optional">+$800.00/yr</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="inv-totals">
+      <div class="totals-block">
+        <div class="total-row">
+          <span class="t-label">Core Project Subtotal</span>
+          <span class="t-val">$4,500.00</span>
+        </div>
+        <div class="total-row">
+          <span class="t-label">Optional Add-Ons</span>
+          <span class="t-val">$0.00</span>
+        </div>
+        <div class="total-row deposit">
+          <span class="t-label">50% Deposit Due to Begin</span>
+          <span class="t-val">$2,250.00</span>
+        </div>
+        <div class="total-row deposit" style="border-top:none; padding-top:0.2rem; margin-top:0;">
+          <span class="t-label">50% Balance Due on Delivery</span>
+          <span class="t-val">$2,250.00</span>
+        </div>
+        <div class="total-row grand">
+          <span class="t-label">Total Due</span>
+          <span class="t-val">$4,500.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="inv-terms">
+      <div class="terms-block">
+        <div class="terms-label">Payment Terms</div>
+        <ul>
+          <li>50% deposit ($2,250) required to begin work</li>
+          <li>50% balance ($2,250) due upon final delivery</li>
+          <li>Net 15 on final invoice</li>
+          <li>Accepted: Zelle · Venmo · Check · Bank Transfer</li>
+        </ul>
+      </div>
+      <div class="terms-block">
+        <div class="terms-label">Scope &amp; Ownership</div>
+        <ul>
+          <li>Full source code transferred to client on final payment</li>
+          <li>Client responsible for hosting &amp; domain after handoff</li>
+          <li>Revisions included: up to 2 rounds per page</li>
+          <li>Timeline: approx. 3–4 weeks from deposit receipt</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /inv-body -->
+
+  <!-- Footer -->
+  <div class="inv-footer">
+    <p>Questions? bspivey212@gmail.com · fixedITtech.com</p>
+    <p class="thank-you">Thank you for your business, Dr. Patel.</p>
+  </div>
+
+</div>
+</body>
+</html>

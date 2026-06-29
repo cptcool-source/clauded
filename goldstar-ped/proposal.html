@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Proposal — Gold Star Pediatrics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #1C2B36;
+    --ink-soft: #3D5060;
+    --ink-muted:rgba(28,43,54,0.45);
+    --teal:     #2BA8A0;
+    --teal-dark:#1E8078;
+    --teal-bg:  rgba(43,168,160,0.06);
+    --gold:     #E8A825;
+    --gold-dark:#C98A18;
+    --gold-bg:  rgba(232,168,37,0.08);
+    --mist:     #EDF5F4;
+    --cream:    #FAF7F2;
+    --white:    #FFFFFF;
+    --border:   rgba(28,43,54,0.10);
+    --red-bg:   rgba(211,62,62,0.06);
+    --red:      #C13A3A;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--cream);
+    padding: 2rem;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(28,43,54,0.10);
+  }
+
+  /* ── Header ── */
+  .prop-header {
+    background: var(--teal-dark);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .prop-header::before {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .prop-header::after {
+    content: '';
+    position: absolute;
+    right: 60px;
+    top: 40px;
+    width: 180px;
+    height: 180px;
+    background: rgba(255,255,255,0.035);
+    border-radius: 50%;
+  }
+  .prop-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.75rem;
+  }
+  .prop-title {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .prop-title span { color: var(--gold); }
+  .prop-sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 480px;
+  }
+  .prop-from {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+  }
+  .prop-from strong { color: rgba(255,255,255,0.75); }
+
+  /* ── Body ── */
+  .prop-body { padding: 3rem; }
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+  h2 .section-num {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.6rem;
+    margin-right: 0.6rem;
+    vertical-align: middle;
+  }
+
+  section + section { margin-top: 2.75rem; }
+
+  p { color: var(--ink-soft); margin-bottom: 0.8rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); }
+
+  /* ── Value card ── */
+  .value-intro {
+    background: var(--gold-bg);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+    font-size: 1.05rem;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.65;
+  }
+  .value-intro strong { color: var(--gold-dark); }
+
+  /* ── Comparison table ── */
+  .comp-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0 1.75rem; }
+  .comp-table thead tr { background: var(--ink); }
+  .comp-table thead th {
+    padding: 0.7rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.75);
+    text-align: left;
+  }
+  .comp-table tbody tr { border-bottom: 1px solid var(--border); }
+  .comp-table tbody tr:nth-child(even) { background: var(--cream); }
+  .comp-table td { padding: 0.8rem 1rem; font-size: 0.88rem; color: var(--ink-soft); vertical-align: top; }
+  .comp-table td:first-child { font-weight: 600; color: var(--ink); width: 36%; }
+  .comp-table .bad  { color: var(--red); }
+  .comp-table .good { color: var(--teal-dark); font-weight: 600; }
+
+  /* ── Deliverables list ── */
+  .deliverables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+  .del-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    background: var(--mist);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+  .del-icon {
+    flex-shrink: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.05rem;
+  }
+  .del-icon svg { width: 12px; height: 12px; fill: white; }
+  .del-text { font-size: 0.83rem; color: var(--ink-soft); line-height: 1.5; }
+  .del-text strong { display: block; color: var(--ink); font-size: 0.85rem; margin-bottom: 0.15rem; }
+
+  /* ── ROI callout ── */
+  .roi-block {
+    background: var(--ink);
+    border-radius: 10px;
+    padding: 1.75rem 2rem;
+    margin: 1.5rem 0;
+    color: white;
+  }
+  .roi-block .roi-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .roi-block p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .roi-block p:last-child { margin-bottom: 0; }
+  .roi-block strong { color: var(--white); }
+  .roi-math {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .roi-stat { text-align: center; }
+  .roi-stat .stat-num {
+    display: block;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .roi-stat .stat-note {
+    display: block;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.3rem;
+    line-height: 1.4;
+  }
+  .roi-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+
+  /* ── Objections ── */
+  .objection {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+  .objection:last-child { margin-bottom: 0; }
+  .obj-question {
+    background: var(--red-bg);
+    border-left: 3px solid var(--red);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .obj-q-icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: white;
+    margin-top: 0.1rem;
+  }
+  .obj-question p {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--red);
+    margin: 0;
+    font-style: italic;
+  }
+  .obj-answer {
+    padding: 1.25rem 1.5rem;
+    background: var(--white);
+  }
+  .obj-answer p {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.6rem;
+  }
+  .obj-answer p:last-child { margin-bottom: 0; }
+  .obj-answer .punchline {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--teal-dark);
+    background: var(--teal-bg);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    padding: 0.75rem 1rem;
+    margin-top: 0.75rem;
+  }
+
+  /* ── CTA ── */
+  .prop-cta {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, #1A6B65 100%);
+    padding: 2.5rem 3rem;
+    text-align: center;
+  }
+  .prop-cta h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .prop-cta p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1.5rem;
+  }
+  .cta-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-primary {
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.85rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .cta-secondary {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+  }
+  .cta-secondary strong { color: rgba(255,255,255,0.85); }
+
+  /* ── Footer ── */
+  .prop-footer {
+    padding: 1.25rem 3rem;
+    background: var(--mist);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .prop-footer p { font-size: 0.78rem; color: var(--ink-muted); margin: 0; }
+
+  @media print {
+    body { padding: 0; background: white; }
+    .page { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="prop-header">
+    <div class="prop-eyebrow">Website Proposal · Prepared by fixedIT Tech</div>
+    <div class="prop-title">Why Gold Star Pediatrics<br>deserves a <span>custom website.</span></div>
+    <div class="prop-sub">A plain-language case for what your practice gains — and what you're leaving on the table right now.</div>
+    <div class="prop-from">Prepared for <strong>Dr. Jignesh Patel &amp; the Gold Star Pediatrics team</strong> · June 2026</div>
+  </div>
+
+  <!-- Body -->
+  <div class="prop-body">
+
+    <!-- Section 1: The Pitch -->
+    <section>
+      <h2><span class="section-num">1</span>The bottom line</h2>
+
+      <div class="value-intro">
+        Your website is often the <strong>first impression a North Port family gets of your practice</strong> — before they ever call, before they walk in the door. Right now, that impression is a generic Wix template that looks like every other pediatric office in Sarasota County. We can do better.
+      </div>
+
+      <p>A custom-built website isn't a luxury — it's a patient acquisition tool. Parents searching for a pediatrician in North Port have options. When they land on a site that feels professional, warm, and easy to use, they book. When they land on something that feels cobbled together, they keep scrolling.</p>
+
+      <p>This proposal is for a <strong>10-page, fully custom website</strong> built from the ground up for Gold Star Pediatrics — designed to match the quality of care your practice actually delivers.</p>
+    </section>
+
+    <!-- Section 2: What you're getting -->
+    <section>
+      <h2><span class="section-num">2</span>What you're getting</h2>
+
+      <p>Every pixel is original. No Wix, no WordPress, no purchased templates. The code belongs to you the moment the final payment clears — host it anywhere, modify it anytime, owe no one a monthly fee.</p>
+
+      <div class="deliverables">
+        <div class="del-item">
+          <div class="del-icon"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="del-text"><strong>10 Custom Pages</strong>Home, About, Services, New Patients, Team, Policies, Resources, Self Pay, Blog, Contact</div>
+        </div>
+        <div class="del-item">
+          <div class="del-icon"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="del-text"><strong>Original Brand Design System</strong>Custom color palette, typography pairing, and component library built for Gold Star</div>
+        </div>
+        <div class="del-item">
+          <div class="del-icon"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="del-text"><strong>Mobile-First Responsive</strong>Looks great on every screen — phone, tablet, desktop</div>
+        </div>
+        <div class="del-item">
+          <div class="del-icon"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="del-text"><strong>Real Photography Integration</strong>Your actual team and clinic photos, art-directed into the layout</div>
+        </div>
+        <div class="del-item">
+          <div class="del-icon"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="del-text"><strong>Appointment &amp; Self-Pay CTAs</strong>Every key page drives parents toward booking or calling</div>
+        </div>
+        <div class="del-item">
+          <div class="del-icon"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="del-text"><strong>Full Code Ownership on Handoff</strong>You own the files. No recurring platform fees, no lock-in.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: vs. Wix -->
+    <section>
+      <h2><span class="section-num">3</span>Custom vs. staying on Wix</h2>
+
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>What matters to a practice</th>
+            <th>Your current Wix site</th>
+            <th>This custom build</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Brand distinction</td>
+            <td class="bad">Looks like every Wix health template</td>
+            <td class="good">Unmistakably Gold Star</td>
+          </tr>
+          <tr>
+            <td>Monthly platform cost</td>
+            <td class="bad">~$29–$36/month, forever</td>
+            <td class="good">One-time fee. Host for ~$10/mo anywhere.</td>
+          </tr>
+          <tr>
+            <td>Code ownership</td>
+            <td class="bad">Wix owns the platform. You rent it.</td>
+            <td class="good">Your files, your server, your call.</td>
+          </tr>
+          <tr>
+            <td>Performance &amp; speed</td>
+            <td class="bad">Wix adds significant load bloat</td>
+            <td class="good">Lean hand-coded HTML/CSS/JS — fast load</td>
+          </tr>
+          <tr>
+            <td>Self-pay pricing module</td>
+            <td class="bad">Generic, hard to customize</td>
+            <td class="good">Custom section designed for your pricing</td>
+          </tr>
+          <tr>
+            <td>First impression on mobile</td>
+            <td class="bad">Responsive but not intentional</td>
+            <td class="good">Mobile-first, built for thumbs</td>
+          </tr>
+          <tr>
+            <td>SEO foundation</td>
+            <td class="bad">Limited control over markup</td>
+            <td class="good">Clean semantic HTML, full meta control</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 4: ROI -->
+    <section>
+      <h2><span class="section-num">4</span>What this pays back</h2>
+
+      <p>This isn't a branding exercise — it's a patient acquisition investment. Here's the math:</p>
+
+      <div class="roi-block">
+        <div class="roi-label">Simple ROI Scenario</div>
+        <p>A pediatric well-visit averages <strong>$150–$300</strong> per visit. An established patient family visits 4–6 times per year. If a better website converts just <strong>3 more new families per month</strong> who would otherwise have chosen a competitor, the math looks like this:</p>
+        <div class="roi-math">
+          <div class="roi-stat">
+            <span class="stat-num">3</span>
+            <span class="stat-note">new families/month<br>converted by better UX</span>
+          </div>
+          <div class="roi-divider"></div>
+          <div class="roi-stat">
+            <span class="stat-num">$900</span>
+            <span class="stat-note">est. added revenue<br>in month one alone</span>
+          </div>
+          <div class="roi-divider"></div>
+          <div class="roi-stat">
+            <span class="stat-num">~5 mo.</span>
+            <span class="stat-note">to fully recoup<br>the site cost</span>
+          </div>
+          <div class="roi-divider"></div>
+          <div class="roi-stat">
+            <span class="stat-num">Year 2+</span>
+            <span class="stat-note">pure upside —<br>no platform fees</span>
+          </div>
+        </div>
+      </div>
+
+      <p>That doesn't factor in the self-pay patients who choose Gold Star because the pricing page is clear and trustworthy — a segment that's growing fast in North Port as more families go uninsured or underinsured.</p>
+    </section>
+
+    <!-- Section 5: Objections -->
+    <section>
+      <h2><span class="section-num">5</span>Fair questions — and honest answers</h2>
+
+      <!-- Objection 1 -->
+      <div class="objection">
+        <div class="obj-question">
+          <div class="obj-q-icon">?</div>
+          <p>"We already have a website that works. Why spend $4,500 to fix something that isn't broken?"</p>
+        </div>
+        <div class="obj-answer">
+          <p>A site that "works" and a site that <em>wins patients</em> are two different things. Your current site delivers basic information — but it doesn't build trust, it doesn't reflect the quality of care you provide, and it doesn't give parents a reason to choose Gold Star over any other practice in the area.</p>
+          <p>Studies consistently show that <strong>75% of people judge a business's credibility based on its website design</strong>. In healthcare, that credibility gap can mean a family calls your competitor instead.</p>
+          <div class="punchline">The question isn't whether your current site is broken. It's whether it's working as hard as your team is.</div>
+        </div>
+      </div>
+
+      <!-- Objection 2 -->
+      <div class="objection">
+        <div class="obj-question">
+          <div class="obj-q-icon">?</div>
+          <p>"$4,500 feels like a lot. Could we get something cheaper?"</p>
+        </div>
+        <div class="obj-answer">
+          <p>You could. Template-based agencies will sell you a Wix or WordPress build for $1,500–$2,500. But that's still a template — just a slightly customized one. You'll pay Wix $350+ per year forever, you won't own the code, and you'll get a site that looks like dozens of other pediatric practices in Florida.</p>
+          <p>Healthcare-focused agencies in larger markets charge <strong>$10,000–$20,000</strong> for what you're getting here. At $4,500, you're getting a premium custom build at the freelancer rate — because this practice is local and Charles is invested in your success, not billing for a San Francisco overhead structure.</p>
+          <div class="punchline">Cheaper is available. But you'll spend less on a website and more on Wix, more on a redesign in two years, and you'll leave patient conversions on the table the whole time.</div>
+        </div>
+      </div>
+
+      <!-- Objection 3 -->
+      <div class="objection">
+        <div class="obj-question">
+          <div class="obj-q-icon">?</div>
+          <p>"We don't have the time to manage a new website project right now."</p>
+        </div>
+        <div class="obj-answer">
+          <p>That's exactly why this is built as a handoff — not a system your team has to maintain or learn. The design decisions, the photography, the page structure — that's all handled. What we need from Gold Star is logo files, any updated photos, and a few rounds of quick feedback on copy.</p>
+          <p>The build timeline is <strong>3–4 weeks from deposit</strong>. Your team's involvement is maybe 2–3 hours of feedback total. After handoff, the site runs on basic hosting — no plugins to update, no Wix dashboard to log into, no proprietary system to learn.</p>
+          <div class="punchline">The hardest part of this project is the decision to start. Everything after that is handled.</div>
+        </div>
+      </div>
+
+    </section>
+
+  </div><!-- /prop-body -->
+
+  <!-- CTA -->
+  <div class="prop-cta">
+    <h3>Ready to give Gold Star the website it deserves?</h3>
+    <p>Review the invoice, ask any questions, and let's get started.</p>
+    <div class="cta-row">
+      <span class="cta-primary">Accept &amp; Send Deposit</span>
+      <span class="cta-secondary">Questions? <strong>bspivey212@gmail.com</strong></span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="prop-footer">
+    <p>fixedIT Tech · Charles Spivey · North Port, FL</p>
+    <p>Prepared June 27, 2026 · GSP-2026-001</p>
+  </div>
+
+</div>
+</body>
+</html>

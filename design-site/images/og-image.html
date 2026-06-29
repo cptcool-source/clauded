@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Geist+Mono:wght@500&family=Crete+Round&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,800;1,300&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Fixed canvas — screenshot this at full page size */
+  /* Fixed canvas — screenshot this at 1200×630 full page size */
   html, body {
     width: 1200px;
     height: 630px;
     overflow: hidden;
-    background: #09091F;
+    background: #111111;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -23,122 +23,121 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 88px;
+    padding: 0 96px;
   }
 
-  /* Ambient orbs */
-  .orb {
+  /* Coral ambient glow — top right */
+  .glow {
     position: absolute;
-    border-radius: 50%;
+    width: 560px; height: 560px;
+    background: radial-gradient(circle, rgba(224,92,58,0.17) 0%, transparent 68%);
+    filter: blur(90px);
+    right: -60px; top: -80px;
     pointer-events: none;
   }
-  .orb-1 {
-    width: 700px; height: 600px;
-    background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 70%);
-    filter: blur(80px);
-    left: -120px; top: -140px;
-  }
-  .orb-2 {
-    width: 480px; height: 380px;
-    background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 70%);
-    filter: blur(70px);
-    right: -40px; top: 20px;
-  }
-  .orb-3 {
-    width: 360px; height: 320px;
-    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
-    filter: blur(60px);
-    right: 80px; bottom: -60px;
-  }
 
-  /* fIT logo mark — top right */
+  /* fT mark — top right */
   .mark {
     position: absolute;
     top: 52px;
-    right: 88px;
-    width: 80px;
-    height: 80px;
-    background: #6366F1;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Crete Round', Georgia, serif;
-    font-size: 37px;
-    color: #fff;
-    letter-spacing: -1px;
+    right: 96px;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: -0.05em;
+    line-height: 1;
   }
+  .mark-f { color: #F5F3EE; }
+  .mark-t { color: #E05C3A; }
 
   /* Bottom domain */
   .domain {
     position: absolute;
-    bottom: 50px;
-    right: 88px;
+    bottom: 52px;
+    right: 96px;
     font-family: 'Geist Mono', monospace;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #5A5690;
+    color: rgba(245,243,238,0.22);
+  }
+
+  /* Thin vertical rule — left accent */
+  .v-rule {
+    position: absolute;
+    left: 96px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(224,92,58,0.35) 30%, rgba(224,92,58,0.35) 70%, transparent);
   }
 
   /* Content */
   .eyebrow {
     font-family: 'Geist Mono', monospace;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #818CF8;
+    color: #E05C3A;
+    opacity: 0.75;
     margin-bottom: 32px;
+    padding-left: 20px;
   }
 
-  .headline {
-    font-family: 'Cormorant Garamond', serif;
+  .wordmark {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 108px;
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+    color: #F5F3EE;
+    margin-bottom: 6px;
+    padding-left: 20px;
+  }
+  .wordmark-sub {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 300;
     font-style: italic;
-    font-weight: 700;
-    font-size: 104px;
-    line-height: 0.9;
-    color: #fff;
-    letter-spacing: -0.01em;
-    margin-bottom: 36px;
-  }
-
-  .headline .accent {
-    color: #F59E0B;
+    font-size: 72px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #E05C3A;
+    margin-bottom: 28px;
+    padding-left: 20px;
   }
 
   .rule {
-    width: 320px;
-    height: 1px;
-    background: #F59E0B;
-    box-shadow: 0 0 14px rgba(245,158,11,0.65);
-    margin-bottom: 32px;
+    width: 56px;
+    height: 2px;
+    background: rgba(224,92,58,0.55);
+    margin: 0 0 28px 20px;
   }
 
-  .sub {
-    font-family: 'Geist Mono', monospace;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #8880C4;
+  .tagline {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: rgba(245,243,238,0.36);
+    padding-left: 20px;
   }
 </style>
 </head>
 <body>
   <div class="canvas">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+    <div class="glow"></div>
+    <div class="v-rule"></div>
 
-    <div class="mark">fIT</div>
-    <p class="domain">fixedittech.com</p>
+    <div class="mark"><span class="mark-f">c</span><span class="mark-t">d</span></div>
+    <p class="domain">chuckdesign.com</p>
 
-    <p class="eyebrow">fixedIT Tech &nbsp;·&nbsp; North Port, FL 34291</p>
-    <h1 class="headline">Designs made<br>to <span class="accent">lead.</span></h1>
+    <p class="eyebrow">Web Design &nbsp;·&nbsp; North Port, FL &nbsp;·&nbsp; Southwest Florida</p>
+    <h1 class="wordmark">chuck</h1>
+    <p class="wordmark-sub">design</p>
     <div class="rule"></div>
-    <p class="sub">Web Design &nbsp;·&nbsp; Development &nbsp;·&nbsp; SEO &nbsp;·&nbsp; Southwest Florida</p>
+    <p class="tagline">Designs made to lead.</p>
   </div>
 </body>
 </html>

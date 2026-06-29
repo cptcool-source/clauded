@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chuck design — Logo Concept Boards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:    #111111;
+      --coral:  #E05C3A;
+      --cream:  #FAFAF8;
+      --canvas: #0C0C0C;
+      --panel:  #161616;
+      --dim:    rgba(250,250,248,0.22);
+      --g:      2px;
+    }
+
+    body {
+      background: var(--canvas);
+      font-family: 'Outfit', system-ui, sans-serif;
+      color: var(--cream);
+      padding: 56px 48px;
+      min-width: 1080px;
+    }
+
+    /* ── Session header ── */
+    .session-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(250,250,248,0.07);
+    }
+    .session-header h1 {
+      font-size: 11px;
+      font-family: 'Geist Mono', monospace;
+      font-weight: 400;
+      letter-spacing: 0.13em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+    .session-header .tag {
+      font-size: 11px;
+      font-family: 'Geist Mono', monospace;
+      font-weight: 500;
+      color: var(--coral);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Board wrapper ── */
+    .board { margin-bottom: 72px; }
+
+    .board-label {
+      font-size: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .board-label em { font-style: normal; color: var(--coral); }
+
+    /* ── 3-col 2-row grid ── */
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 300px 200px;
+      gap: var(--g);
+      background: #282828;
+      border: var(--g) solid #282828;
+    }
+
+    .panel {
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .panel--light { background: var(--cream); }
+    .panel--mid   { background: #1D1D1D; }
+
+    .p-label {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      font-size: 9px;
+      font-family: 'Geist Mono', monospace;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: rgba(250,250,248,0.18);
+      text-transform: uppercase;
+    }
+    .panel--light .p-label { color: rgba(17,17,17,0.22); }
+
+    /* ────────────────────────────────────────────
+       DIRECTION 1 — WEIGHT CONTRAST WORDMARK
+    ──────────────────────────────────────────── */
+
+    .wm1 { line-height: 1; display: flex; flex-direction: column; align-items: flex-start; }
+    .wm1 .n { font-size: 80px; font-weight: 800; letter-spacing: -0.048em; color: var(--cream); }
+    .wm1 .d { font-size: 80px; font-weight: 300; font-style: italic; letter-spacing: -0.022em; color: var(--coral); margin-top: -10px; }
+    .panel--light .wm1 .n { color: var(--ink); }
+
+    .wm1-sm .n  { font-size: 22px; }
+    .wm1-sm .d  { font-size: 22px; margin-top: -2px; }
+
+    .mono1 {
+      font-size: 130px;
+      font-weight: 800;
+      letter-spacing: -0.1em;
+      line-height: 1;
+    }
+    .mono1 .c { color: var(--cream); }
+    .mono1 .d { color: var(--coral); }
+
+    /* ────────────────────────────────────────────
+       DIRECTION 2 — CD MARK SYSTEM
+    ──────────────────────────────────────────── */
+
+    .lockup2 { display: flex; align-items: center; gap: 16px; }
+    .words2  { display: flex; flex-direction: column; line-height: 1; }
+    .words2 .n { font-size: 36px; font-weight: 800; letter-spacing: -0.04em; color: var(--cream); }
+    .words2 .d { font-size: 16px; font-weight: 300; letter-spacing: 0.04em; color: var(--coral); margin-top: 1px; }
+    .panel--light .words2 .n { color: var(--ink); }
+
+    /* ────────────────────────────────────────────
+       DIRECTION 3 — TYPOGRAPHIC PRECISION
+    ──────────────────────────────────────────── */
+
+    .wm3      { display: flex; flex-direction: column; line-height: 1; }
+    .wm3 .nr  { display: flex; align-items: flex-end; gap: 0; }
+    .wm3 .n   { font-size: 80px; font-weight: 800; letter-spacing: -0.04em; color: var(--cream); }
+    .wm3 .dot { width: 14px; height: 14px; background: var(--coral); flex-shrink: 0; margin-bottom: 9px; margin-left: 5px; }
+    .wm3 .d   { font-size: 22px; font-weight: 300; letter-spacing: 0.05em; color: var(--coral); margin-top: 5px; }
+    .panel--light .wm3 .n { color: var(--ink); }
+
+    .wm3-sm .n   { font-size: 22px; }
+    .wm3-sm .dot { width: 5px; height: 5px; margin-bottom: 2px; margin-left: 2px; }
+    .wm3-sm .d   { font-size: 8px; margin-top: 1px; }
+
+    /* ── Shared components ── */
+
+    .nav-mock {
+      width: 100%;
+      border-radius: 7px;
+      overflow: hidden;
+      border: 1px solid rgba(250,250,248,0.07);
+    }
+    .nav-chrome {
+      background: #111;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 11px;
+      gap: 6px;
+    }
+    .chrome-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(250,250,248,0.13); }
+    .nav-bar {
+      background: #161616;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-right {
+      font-size: 9px;
+      font-family: 'Geist Mono', monospace;
+      color: rgba(250,250,248,0.28);
+      letter-spacing: 0.08em;
+      margin-left: auto;
+    }
+
+    .fav-row { display: flex; align-items: flex-end; gap: 18px; }
+    .fav-item { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .fav-item span {
+      font-size: 9px;
+      font-family: 'Geist Mono', monospace;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+    }
+    .fav-box {
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swatch-col { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .swatch-row-item { display: flex; align-items: center; gap: 14px; }
+    .chip { width: 36px; height: 22px; border-radius: 3px; flex-shrink: 0; }
+    .chip--bordered { border: 1px solid rgba(250,250,248,0.12); }
+    .swatch-hex {
+      font-size: 10px;
+      font-family: 'Geist Mono', monospace;
+      color: var(--dim);
+      letter-spacing: 0.04em;
+    }
+
+    .type-col { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+    .type-row-item { display: flex; align-items: baseline; gap: 10px; }
+    .type-wt {
+      font-size: 9px;
+      font-family: 'Geist Mono', monospace;
+      color: rgba(250,250,248,0.16);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    /* OG preview card */
+    .og-card {
+      width: 100%;
+      background: #111;
+      border-radius: 6px;
+      padding: 16px 20px;
+      border: 1px solid rgba(250,250,248,0.06);
+    }
+    .og-eyebrow {
+      font-size: 8px;
+      font-family: 'Geist Mono', monospace;
+      color: var(--coral);
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .og-rule { height: 1px; background: var(--coral); width: 28px; margin: 9px 0; }
+    .og-tag {
+      font-size: 8px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(250,250,248,0.38);
+    }
+
+    /* Construction diagram labels */
+    .constr-label {
+      font-size: 9px;
+      font-family: 'Geist Mono', monospace;
+      color: rgba(250,250,248,0.18);
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* Detail panel */
+    .detail-panel { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+    /* Footer */
+    .footer-note {
+      margin-top: 40px;
+      font-size: 10px;
+      font-family: 'Geist Mono', monospace;
+      color: rgba(250,250,248,0.12);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="session-header">
+    <h1>chuck design &mdash; Logo Concept Boards &mdash; 3 Directions</h1>
+    <span class="tag">chuckdesign.com &middot; 2026</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       DIRECTION 01 — WEIGHT CONTRAST WORDMARK
+  ════════════════════════════════════════════════════════════════════ -->
+
+  <div class="board">
+    <div class="board-label">Direction <em>01</em> &mdash; Weight Contrast Wordmark &mdash; same tension as the hero headline</div>
+    <div class="board-grid">
+
+      <!-- P1: Dark cover -->
+      <div class="panel">
+        <div class="wm1">
+          <span class="n">chuck</span>
+          <span class="d">design</span>
+        </div>
+        <div class="p-label">Primary · dark bg</div>
+      </div>
+
+      <!-- P2: cd monogram -->
+      <div class="panel panel--mid" style="justify-content:center;">
+        <div class="mono1"><span class="c">c</span><span class="d">d</span></div>
+        <div class="p-label">cd monogram · Outfit 800</div>
+      </div>
+
+      <!-- P3: Light bg -->
+      <div class="panel panel--light">
+        <div class="wm1">
+          <span class="n">chuck</span>
+          <span class="d">design</span>
+        </div>
+        <div class="p-label">Primary · light bg</div>
+      </div>
+
+      <!-- P4: Nav mockup -->
+      <div class="panel" style="padding:24px;">
+        <div class="nav-mock">
+          <div class="nav-chrome">
+            <div class="chrome-dot"></div>
+            <div class="chrome-dot"></div>
+            <div class="chrome-dot"></div>
+          </div>
+          <div class="nav-bar">
+            <div class="wm1 wm1-sm">
+              <span class="n">chuck</span>
+              <span class="d">design</span>
+            </div>
+            <span class="nav-right">chuckdesign.com</span>
+          </div>
+        </div>
+        <div class="p-label">Website nav · dark header</div>
+      </div>
+
+      <!-- P5: Favicon sizes -->
+      <div class="panel">
+        <div class="fav-row">
+          <div class="fav-item">
+            <div class="fav-box" style="width:80px;height:80px;border-radius:18px;">
+              <span style="font-size:48px;font-weight:800;letter-spacing:-0.1em;line-height:1;">
+                <span style="color:#FAFAF8;">c</span><span style="color:#E05C3A;">d</span>
+              </span>
+            </div>
+            <span>512</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-box" style="width:42px;height:42px;border-radius:9px;">
+              <span style="font-size:25px;font-weight:800;letter-spacing:-0.1em;line-height:1;">
+                <span style="color:#FAFAF8;">c</span><span style="color:#E05C3A;">d</span>
+              </span>
+            </div>
+            <span>64</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-box" style="width:22px;height:22px;border-radius:5px;">
+              <span style="font-size:12px;font-weight:800;letter-spacing:-0.08em;line-height:1;">
+                <span style="color:#FAFAF8;">c</span><span style="color:#E05C3A;">d</span>
+              </span>
+            </div>
+            <span>32</span>
+          </div>
+        </div>
+        <div class="p-label">Favicon · icon scale</div>
+      </div>
+
+      <!-- P6: Type + palette -->
+      <div class="panel" style="align-items:flex-start;padding:28px;gap:20px;">
+        <div class="type-col">
+          <div class="type-row-item">
+            <span style="font-size:34px;font-weight:800;letter-spacing:-0.04em;color:var(--cream);">chuck</span>
+            <span class="type-wt">800</span>
+          </div>
+          <div class="type-row-item">
+            <span style="font-size:34px;font-weight:300;letter-spacing:-0.01em;color:rgba(250,250,248,0.35);">chuck</span>
+            <span class="type-wt">300</span>
+          </div>
+          <div class="type-row-item">
+            <span style="font-size:34px;font-weight:300;font-style:italic;letter-spacing:-0.01em;color:var(--coral);">design</span>
+            <span class="type-wt">300i</span>
+          </div>
+        </div>
+        <div class="swatch-col">
+          <div class="swatch-row-item">
+            <div class="chip chip--bordered" style="background:#111111;"></div>
+            <span class="swatch-hex">#111111</span>
+          </div>
+          <div class="swatch-row-item">
+            <div class="chip" style="background:#E05C3A;"></div>
+            <span class="swatch-hex">#E05C3A</span>
+          </div>
+          <div class="swatch-row-item">
+            <div class="chip" style="background:#FAFAF8;"></div>
+            <span class="swatch-hex">#FAFAF8</span>
+          </div>
+        </div>
+        <div class="p-label">Weight system · palette</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       DIRECTION 02 — CD MARK SYSTEM
+  ════════════════════════════════════════════════════════════════════ -->
+
+  <div class="board">
+    <div class="board-label">Direction <em>02</em> &mdash; cd Mark System &mdash; geometric stamp anchors the wordmark</div>
+    <div class="board-grid">
+
+      <!-- P1: Mark + wordmark dark -->
+      <div class="panel" style="gap:18px;">
+        <!-- cd geometric mark: c arc (cream) + d bowl+stem (coral), built from one shared circle -->
+        <svg width="76" height="84" viewBox="0 0 76 84" xmlns="http://www.w3.org/2000/svg">
+          <!-- c: large arc CCW from (52,22) to (52,62), circle center ~(26,42) r=30 -->
+          <path d="M 52 22 A 30 30 0 1 0 52 62"
+                fill="none" stroke="#FAFAF8" stroke-width="9" stroke-linecap="square"/>
+          <!-- d: small CW arc = right bowl -->
+          <path d="M 52 22 A 30 30 0 0 1 52 62"
+                fill="none" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+          <!-- d: vertical stem -->
+          <line x1="61" y1="8" x2="61" y2="76"
+                stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+        </svg>
+        <div class="words2">
+          <span class="n">chuck</span>
+          <span class="d">design</span>
+        </div>
+        <div class="p-label">Mark + wordmark · dark</div>
+      </div>
+
+      <!-- P2: Mark construction diagram -->
+      <div class="panel panel--mid" style="justify-content:center;">
+        <svg width="170" height="170" viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg">
+          <!-- Construction grid -->
+          <line x1="10" y1="85" x2="160" y2="85" stroke="rgba(250,250,248,0.07)" stroke-width="1"/>
+          <line x1="85" y1="10" x2="85" y2="160" stroke="rgba(250,250,248,0.07)" stroke-width="1"/>
+          <!-- Guide circle (dashed) -->
+          <circle cx="59" cy="85" r="56" fill="none" stroke="rgba(250,250,248,0.09)" stroke-width="1" stroke-dasharray="4 3"/>
+          <!-- c arc -->
+          <path d="M 104 45 A 56 56 0 1 0 104 125"
+                fill="none" stroke="rgba(250,250,248,0.6)" stroke-width="10" stroke-linecap="square"/>
+          <!-- d bowl -->
+          <path d="M 104 45 A 56 56 0 0 1 104 125"
+                fill="none" stroke="rgba(224,92,58,0.7)" stroke-width="10" stroke-linecap="square"/>
+          <!-- d stem -->
+          <line x1="120" y1="20" x2="120" y2="150"
+                stroke="rgba(224,92,58,0.7)" stroke-width="10" stroke-linecap="square"/>
+          <!-- Key points -->
+          <circle cx="59" cy="85" r="3.5" fill="rgba(224,92,58,0.5)"/>
+          <circle cx="104" cy="85" r="3.5" fill="rgba(250,250,248,0.3)"/>
+          <!-- Dimension annotations -->
+          <line x1="59" y1="85" x2="104" y2="85" stroke="rgba(250,250,248,0.1)" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="78" y="79" font-family="monospace" font-size="9" fill="rgba(250,250,248,0.2)" text-anchor="middle">r=56</text>
+        </svg>
+        <div class="constr-label">Geometric construction · shared circle</div>
+        <div class="p-label">Mark anatomy</div>
+      </div>
+
+      <!-- P3: Mark + wordmark light -->
+      <div class="panel panel--light">
+        <div class="lockup2">
+          <svg width="52" height="58" viewBox="0 0 76 84" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#111111" stroke-width="9" stroke-linecap="square"/>
+            <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+            <line x1="61" y1="8" x2="61" y2="76" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+          </svg>
+          <div class="words2">
+            <span class="n" style="color:var(--ink);">chuck</span>
+            <span class="d">design</span>
+          </div>
+        </div>
+        <div class="p-label">Mark + wordmark · light</div>
+      </div>
+
+      <!-- P4: One-color stamp -->
+      <div class="panel panel--light" style="flex-direction:row;align-items:center;justify-content:center;gap:32px;">
+        <!-- Black stamp -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <svg width="64" height="72" viewBox="0 0 76 84" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#111111" stroke-width="9" stroke-linecap="square"/>
+            <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#111111" stroke-width="9" stroke-linecap="square"/>
+            <line x1="61" y1="8" x2="61" y2="76" stroke="#111111" stroke-width="9" stroke-linecap="square"/>
+          </svg>
+          <span style="font-size:9px;font-family:'Geist Mono',monospace;color:rgba(17,17,17,0.3);letter-spacing:0.08em;">ONE-COLOR</span>
+        </div>
+        <!-- Coral on ink stamp -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div style="background:#111;width:80px;height:88px;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+            <svg width="50" height="58" viewBox="0 0 76 84" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+              <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+              <line x1="61" y1="8" x2="61" y2="76" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+            </svg>
+          </div>
+          <span style="font-size:9px;font-family:'Geist Mono',monospace;color:rgba(17,17,17,0.3);letter-spacing:0.08em;">REVERSED</span>
+        </div>
+        <div class="p-label">One-color applications</div>
+      </div>
+
+      <!-- P5: Favicon sizes -->
+      <div class="panel">
+        <div class="fav-row">
+          <div class="fav-item">
+            <div class="fav-box" style="width:80px;height:80px;border-radius:18px;">
+              <svg width="54" height="60" viewBox="0 0 76 84">
+                <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#FAFAF8" stroke-width="9" stroke-linecap="square"/>
+                <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+                <line x1="61" y1="8" x2="61" y2="76" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+              </svg>
+            </div>
+            <span>512</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-box" style="width:42px;height:42px;border-radius:9px;">
+              <svg width="29" height="32" viewBox="0 0 76 84">
+                <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#FAFAF8" stroke-width="11" stroke-linecap="square"/>
+                <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#E05C3A" stroke-width="11" stroke-linecap="square"/>
+                <line x1="61" y1="8" x2="61" y2="76" stroke="#E05C3A" stroke-width="11" stroke-linecap="square"/>
+              </svg>
+            </div>
+            <span>64</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-box" style="width:22px;height:22px;border-radius:5px;">
+              <svg width="15" height="17" viewBox="0 0 76 84">
+                <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#FAFAF8" stroke-width="14" stroke-linecap="square"/>
+                <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#E05C3A" stroke-width="14" stroke-linecap="square"/>
+                <line x1="61" y1="8" x2="61" y2="76" stroke="#E05C3A" stroke-width="14" stroke-linecap="square"/>
+              </svg>
+            </div>
+            <span>32</span>
+          </div>
+        </div>
+        <div class="p-label">Favicon · icon scale</div>
+      </div>
+
+      <!-- P6: Tagline + palette -->
+      <div class="panel" style="align-items:flex-start;padding:28px;justify-content:space-between;">
+        <div style="font-size:36px;font-weight:800;letter-spacing:-0.04em;color:var(--cream);line-height:1.05;">
+          Built.<br><span style="color:var(--coral);font-weight:300;font-style:italic;font-size:36px;">Yours.</span>
+        </div>
+        <div class="swatch-col">
+          <div class="swatch-row-item">
+            <div class="chip chip--bordered" style="background:#111111;"></div>
+            <span class="swatch-hex">#111111</span>
+          </div>
+          <div class="swatch-row-item">
+            <div class="chip" style="background:#E05C3A;"></div>
+            <span class="swatch-hex">#E05C3A</span>
+          </div>
+          <div class="swatch-row-item">
+            <div class="chip" style="background:#FAFAF8;"></div>
+            <span class="swatch-hex">#FAFAF8</span>
+          </div>
+        </div>
+        <div class="p-label">Tagline · palette</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       DIRECTION 03 — TYPOGRAPHIC PRECISION
+  ════════════════════════════════════════════════════════════════════ -->
+
+  <div class="board">
+    <div class="board-label">Direction <em>03</em> &mdash; Typographic Precision &mdash; square coral dot = punctuation + mark</div>
+    <div class="board-grid">
+
+      <!-- P1: Logo dark -->
+      <div class="panel">
+        <div class="wm3">
+          <div class="nr">
+            <span class="n">chuck</span>
+            <span class="dot"></span>
+          </div>
+          <span class="d">design</span>
+        </div>
+        <div class="p-label">Primary · dark bg</div>
+      </div>
+
+      <!-- P2: Detail study -->
+      <div class="panel panel--mid" style="gap:16px;justify-content:center;">
+        <div class="detail-panel">
+          <!-- large c showing square terminal concept -->
+          <span style="font-size:140px;font-weight:800;color:var(--cream);letter-spacing:-0.04em;line-height:0.85;opacity:0.88;">c</span>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:20px;height:20px;background:var(--coral);flex-shrink:0;"></div>
+            <span style="font-size:9px;font-family:'Geist Mono',monospace;color:rgba(250,250,248,0.22);letter-spacing:0.1em;">SQ · 20×20 · CORAL</span>
+          </div>
+        </div>
+        <div class="p-label">Square dot · terminal detail</div>
+      </div>
+
+      <!-- P3: Logo light -->
+      <div class="panel panel--light">
+        <div class="wm3">
+          <div class="nr">
+            <span class="n">chuck</span>
+            <span class="dot" style="width:12px;height:12px;margin-bottom:7px;"></span>
+          </div>
+          <span class="d">design</span>
+        </div>
+        <div class="p-label">Primary · light bg</div>
+      </div>
+
+      <!-- P4: OG image preview -->
+      <div class="panel" style="padding:20px;">
+        <div class="og-card">
+          <div class="og-eyebrow">WEB DESIGN &middot; NORTH PORT, FL &middot; SOUTHWEST FLORIDA</div>
+          <div style="display:flex;align-items:flex-end;gap:4px;line-height:1;">
+            <span style="font-size:32px;font-weight:800;letter-spacing:-0.04em;color:#FAFAF8;">chuck</span>
+            <span style="width:7px;height:7px;background:#E05C3A;display:inline-block;margin-bottom:4px;flex-shrink:0;"></span>
+          </div>
+          <div style="font-size:15px;font-weight:300;letter-spacing:0.04em;color:#E05C3A;margin-top:1px;">design</div>
+          <div class="og-rule"></div>
+          <div class="og-tag">Designs made to lead.</div>
+        </div>
+        <span style="font-size:9px;font-family:'Geist Mono',monospace;color:var(--dim);letter-spacing:0.08em;margin-top:10px;">OG IMAGE 1200×630</span>
+        <div class="p-label">Social preview · OG image</div>
+      </div>
+
+      <!-- P5: Dot as favicon -->
+      <div class="panel">
+        <div class="fav-row">
+          <div class="fav-item">
+            <div class="fav-box" style="width:80px;height:80px;border-radius:18px;">
+              <div style="width:38px;height:38px;background:#E05C3A;"></div>
+            </div>
+            <span>512</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-box" style="width:42px;height:42px;border-radius:9px;">
+              <div style="width:20px;height:20px;background:#E05C3A;"></div>
+            </div>
+            <span>64</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-box" style="width:22px;height:22px;border-radius:5px;">
+              <div style="width:10px;height:10px;background:#E05C3A;"></div>
+            </div>
+            <span>32</span>
+          </div>
+        </div>
+        <div style="font-size:9px;font-family:'Geist Mono',monospace;color:var(--dim);letter-spacing:0.08em;margin-top:14px;text-align:center;">The square dot IS the icon mark</div>
+        <div class="p-label">Favicon · square dot mark</div>
+      </div>
+
+      <!-- P6: Nav mockup + palette -->
+      <div class="panel" style="align-items:flex-start;padding:24px;gap:18px;justify-content:center;">
+        <div class="nav-mock">
+          <div class="nav-chrome">
+            <div class="chrome-dot"></div>
+            <div class="chrome-dot"></div>
+            <div class="chrome-dot"></div>
+          </div>
+          <div class="nav-bar" style="padding:10px 16px;">
+            <div class="wm3 wm3-sm">
+              <div class="nr">
+                <span class="n">chuck</span>
+                <span class="dot"></span>
+              </div>
+              <span class="d">design</span>
+            </div>
+            <span class="nav-right">chuckdesign.com</span>
+          </div>
+        </div>
+        <div class="swatch-col">
+          <div class="swatch-row-item">
+            <div class="chip chip--bordered" style="background:#111111;"></div>
+            <span class="swatch-hex">#111111</span>
+          </div>
+          <div class="swatch-row-item">
+            <div class="chip" style="background:#E05C3A;"></div>
+            <span class="swatch-hex">#E05C3A</span>
+          </div>
+          <div class="swatch-row-item">
+            <div class="chip" style="background:#FAFAF8;"></div>
+            <span class="swatch-hex">#FAFAF8</span>
+          </div>
+        </div>
+        <div class="p-label">Nav application · palette</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Comparison strip ── -->
+  <div style="margin-top:12px;margin-bottom:56px;">
+    <div class="board-label" style="margin-bottom:14px;">All three at nav scale</div>
+    <div style="display:flex;gap:var(--g);background:#282828;padding:var(--g);">
+
+      <div style="flex:1;background:var(--panel);padding:20px 28px;display:flex;align-items:center;">
+        <div class="wm1 wm1-sm" style="flex-shrink:0;">
+          <span class="n" style="font-size:21px;">chuck</span>
+          <span class="d" style="font-size:21px;">design</span>
+        </div>
+        <span style="font-size:9px;font-family:'Geist Mono',monospace;color:var(--dim);letter-spacing:0.1em;margin-left:auto;">D1</span>
+      </div>
+
+      <div style="flex:1;background:var(--panel);padding:20px 28px;display:flex;align-items:center;gap:10px;">
+        <svg width="26" height="29" viewBox="0 0 76 84">
+          <path d="M 52 22 A 30 30 0 1 0 52 62" fill="none" stroke="#FAFAF8" stroke-width="9" stroke-linecap="square"/>
+          <path d="M 52 22 A 30 30 0 0 1 52 62" fill="none" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+          <line x1="61" y1="8" x2="61" y2="76" stroke="#E05C3A" stroke-width="9" stroke-linecap="square"/>
+        </svg>
+        <div class="words2">
+          <span class="n" style="font-size:17px;">chuck</span>
+          <span class="d" style="font-size:9px;">design</span>
+        </div>
+        <span style="font-size:9px;font-family:'Geist Mono',monospace;color:var(--dim);letter-spacing:0.1em;margin-left:auto;">D2</span>
+      </div>
+
+      <div style="flex:1;background:var(--panel);padding:20px 28px;display:flex;align-items:center;">
+        <div class="wm3 wm3-sm">
+          <div class="nr">
+            <span class="n" style="font-size:21px;">chuck</span>
+            <span class="dot" style="width:5px;height:5px;margin-bottom:2px;margin-left:2px;"></span>
+          </div>
+          <span class="d" style="font-size:8px;">design</span>
+        </div>
+        <span style="font-size:9px;font-family:'Geist Mono',monospace;color:var(--dim);letter-spacing:0.1em;margin-left:auto;">D3</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-note">
+    chuck design &mdash; logo concept exploration &mdash; direction c system &mdash; outfit 800 / 300 / 300i &middot; #111111 &middot; #E05C3A &middot; #FAFAF8 &mdash; 2026
+  </div>
+
+</body>
+</html>

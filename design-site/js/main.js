@@ -1,5 +1,5 @@
 /* ==========================================================================
-   fixedIT Tech — main.js
+   chuck design — main.js
    Nav · Mobile drawer · Scroll reveals · Process animation · Form · Cursor · Parallax
    ========================================================================== */
 
@@ -152,7 +152,7 @@
 
       var action = form.getAttribute('action');
       if (action.indexOf('REPLACE_WITH_YOUR_FORM_ID') !== -1) {
-        statusEl.textContent = 'Form not yet configured — contact temptestbspivey@gmail.com directly.';
+        statusEl.textContent = 'Form not yet configured — contact charles@chuckdesign.com directly.';
         statusEl.className = 'form-status error';
         return;
       }
@@ -181,7 +181,7 @@
           }
         })
         .catch(function (err) {
-          statusEl.textContent = err.message || 'Something went wrong. Email directly: temptestbspivey@gmail.com';
+          statusEl.textContent = err.message || 'Something went wrong. Email directly: charles@chuckdesign.com';
           statusEl.className = 'form-status error';
           if (btnLabel) btnLabel.textContent = 'Send message';
           submitBtn.disabled = false;
@@ -316,6 +316,25 @@
       var x    = e.pageX - rail.offsetLeft;
       var walk = (x - startX) * 1.5;
       rail.scrollLeft = scrollLeft - walk;
+    });
+  }
+
+  /* ── Service card: 3D mouse-tilt micro-interaction ──────────────────────── */
+  var tiltCards = document.querySelectorAll('.svc-card');
+  if (tiltCards.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    tiltCards.forEach(function (card) {
+      card.style.willChange = 'transform';
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var x = ((e.clientX - r.left) / r.width - 0.5) * 8;
+        var y = ((e.clientY - r.top) / r.height - 0.5) * 8;
+        card.style.transform = 'perspective(900px) translateY(-4px) rotateX(' + (-y) + 'deg) rotateY(' + x + 'deg)';
+        card.style.transition = 'transform 0.06s ease-out, box-shadow 0.3s, border-color 0.28s';
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+        card.style.transition = '';
+      });
     });
   }
 

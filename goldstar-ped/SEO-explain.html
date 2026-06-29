@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO — How to Explain It to the Client</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #1C2B36;
+    --ink-soft: #3D5060;
+    --ink-muted:rgba(28,43,54,0.45);
+    --teal:     #2BA8A0;
+    --teal-dark:#1E8078;
+    --teal-bg:  rgba(43,168,160,0.07);
+    --gold:     #E8A825;
+    --gold-bg:  rgba(232,168,37,0.08);
+    --cream:    #FAF7F2;
+    --mist:     #EDF5F4;
+    --white:    #FFFFFF;
+    --border:   rgba(28,43,54,0.10);
+    --red-bg:   rgba(193,58,58,0.06);
+    --red:      #C13A3A;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 2rem;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(28,43,54,0.09);
+  }
+
+  /* Header */
+  .doc-header {
+    background: var(--ink);
+    padding: 2.5rem 3rem;
+  }
+  .doc-header .eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.5rem;
+  }
+  .doc-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .doc-header h1 span { color: var(--gold); }
+  .doc-header .sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* Body */
+  .doc-body { padding: 2.5rem 3rem; }
+
+  section { margin-bottom: 2.5rem; }
+  section:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  h2::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 1.1em;
+    background: var(--teal);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  p { color: var(--ink-soft); margin-bottom: 0.75rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); }
+
+  /* Callout boxes */
+  .callout {
+    border-left: 3px solid var(--gold);
+    background: var(--gold-bg);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  .callout-teal {
+    border-left: 3px solid var(--teal);
+    background: var(--teal-bg);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+    color: var(--ink);
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.875rem; }
+  thead tr { background: var(--ink); }
+  thead th {
+    padding: 0.65rem 1rem;
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.7);
+    text-align: left;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:nth-child(even) { background: var(--cream); }
+  tbody td { padding: 0.8rem 1rem; color: var(--ink-soft); vertical-align: top; }
+  tbody td:first-child { font-weight: 600; color: var(--ink); width: 38%; }
+
+  /* Objection blocks */
+  .objection { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+  .objection:last-child { margin-bottom: 0; }
+  .obj-q {
+    background: var(--red-bg);
+    border-left: 3px solid var(--red);
+    padding: 0.85rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--red);
+    font-style: italic;
+  }
+  .obj-a {
+    padding: 1rem 1.25rem;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+  .obj-a p { margin-bottom: 0.5rem; }
+  .obj-a p:last-child { margin-bottom: 0; }
+
+  /* Built-in list */
+  ul.check { list-style: none; padding: 0; margin: 0.75rem 0; }
+  ul.check li {
+    padding: 0.4rem 0 0.4rem 1.75rem;
+    position: relative;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--border);
+  }
+  ul.check li:last-child { border-bottom: none; }
+  ul.check li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+  ul.check li strong { color: var(--ink); }
+
+  /* Footer */
+  .doc-footer {
+    background: var(--mist);
+    border-top: 1px solid var(--border);
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .doc-footer p { font-size: 0.75rem; color: var(--ink-muted); margin: 0; }
+
+  @media print {
+    body { padding: 0; background: white; }
+    .page { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="eyebrow">Internal Reference · fixedIT Tech</div>
+    <h1>How to explain <span>SEO</span> to the client</h1>
+    <div class="sub">Gold Star Pediatrics · Talking points, analogies, and objection responses</div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- One-liner -->
+    <section>
+      <h2>The one-sentence version</h2>
+      <div class="callout">
+        "SEO is how Google decides whether to show your practice when a parent in North Port types 'pediatrician near me' — and right now, your Wix site isn't giving Google much to work with."
+      </div>
+    </section>
+
+    <!-- Analogy -->
+    <section>
+      <h2>The analogy that lands with medical clients</h2>
+      <p>Doctors understand referrals. Use that framing:</p>
+      <div class="callout">
+        "Think of Google like the world's largest referral network. When a new family moves to North Port and doesn't know anyone, their first move is Google. SEO is the work that makes sure Gold Star shows up at the top of that search — not page two, not a competitor. A well-optimized site is a referral engine that runs 24/7 without you doing anything."
+      </div>
+    </section>
+
+    <!-- Built in -->
+    <section>
+      <h2>What's already built into the custom site</h2>
+      <p>The custom build already gives a head start over Wix. Explain it this way before pitching the add-on:</p>
+      <ul class="check">
+        <li><strong>Clean HTML structure</strong> — Google can read and understand every page. Wix wraps everything in extra JavaScript that slows Google down.</li>
+        <li><strong>Fast load time</strong> — Google penalizes slow sites. A hand-coded HTML/CSS site loads faster than any Wix page by default.</li>
+        <li><strong>Semantic headings</strong> — Every page has a clear H1 → H2 → H3 hierarchy that tells Google exactly what each page is about.</li>
+        <li><strong>Mobile-first</strong> — Google ranks mobile experience above desktop. This site is built mobile-first from the ground up.</li>
+      </ul>
+      <div class="callout-teal">
+        "You're not starting from zero — the site is already built in a way that Google respects. The SEO setup work takes that foundation and makes sure Google actually <em>knows you exist</em>."
+      </div>
+    </section>
+
+    <!-- What $400 does -->
+    <section>
+      <h2>What the $400 SEO setup actually does</h2>
+      <p>Break it into plain tasks so it doesn't sound like magic:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>What we do</th>
+            <th>What it means for the practice</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Business Profile optimization</td>
+            <td>When someone searches "pediatrician North Port FL," your practice appears in the map pack with hours, reviews, and a click-to-call button.</td>
+          </tr>
+          <tr>
+            <td>Schema markup (structured data)</td>
+            <td>Invisible code that tells Google "this is a medical practice, here's the doctor's name, address, specialty, and phone number" — used for rich search results.</td>
+          </tr>
+          <tr>
+            <td>Meta titles &amp; descriptions</td>
+            <td>Each of the 10 pages gets a custom description that shows up in search results — what parents actually read before clicking.</td>
+          </tr>
+          <tr>
+            <td>Google Search Console setup</td>
+            <td>We submit your sitemap so Google indexes all 10 pages immediately instead of finding them slowly over months.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ROI -->
+    <section>
+      <h2>The ROI frame</h2>
+      <div class="callout">
+        "A $400 SEO setup is a one-time cost. If it moves you from page two to page one for even one search term — 'North Port pediatrician,' 'pediatrician near me 34287,' 'children's doctor North Port' — you could pick up several new families a month who would have otherwise called a competitor. Those families are worth hundreds of dollars a year each, for years."
+      </div>
+    </section>
+
+    <!-- Objections -->
+    <section>
+      <h2>The three objections they'll raise</h2>
+
+      <div class="objection">
+        <div class="obj-q">"We already show up on Google."</div>
+        <div class="obj-a">
+          <p>"You show up — but where? Page two gets about 1% of clicks. Page one, position one gets 27%. The goal isn't to exist on Google, it's to be the first result a North Port parent sees."</p>
+        </div>
+      </div>
+
+      <div class="objection">
+        <div class="obj-q">"Isn't SEO something you have to keep paying for?"</div>
+        <div class="obj-a">
+          <p>"The setup we're talking about is a one-time foundation — not an ongoing agency retainer. You don't need to pay someone $500/month forever. Getting the basics right at launch is the part that matters most, and that's what this covers. If you ever want to go deeper — blog content, paid ads, monthly reporting — that's a separate conversation down the road."</p>
+        </div>
+      </div>
+
+      <div class="objection">
+        <div class="obj-q">"Does it actually work for a small local practice?"</div>
+        <div class="obj-a">
+          <p>"Local SEO is actually where small practices win. You're not competing against WebMD — you're competing against maybe 3–4 other pediatric offices in North Port. A properly set up Google Business Profile with consistent information and a fast, well-structured website will outrank most of them. Local search is the most winnable game in SEO."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The close -->
+    <section>
+      <h2>How to close it</h2>
+      <p>The $400 is easy to fold into the project conversation without making it a big separate decision:</p>
+      <div class="callout">
+        "We can include it as part of the launch — so when the site goes live, Google knows about it immediately and you're set up to rank from day one. Otherwise the site can sit there for months before Google fully indexes it. It's the difference between opening a store and hanging a sign out front."
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <p>fixedIT Tech · Gold Star Pediatrics Project · June 2026</p>
+    <p>Internal reference — not for client distribution</p>
+  </div>
+
+</div>
+</body>
+</html>

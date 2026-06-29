@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Font Comparison — Gold Star Pediatrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400;1,400&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #1C2B36;
+    --ink-soft: #3D5060;
+    --teal:     #2BA8A0;
+    --gold:     #E8A825;
+    --cream:    #FAF7F2;
+    --mist:     #EDF5F4;
+    --white:    #FFFFFF;
+    --border:   rgba(28,43,54,0.10);
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 2rem;
+  }
+
+  h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-bottom: 2.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* current option spans full width */
+  .card.current { grid-column: 1 / -1; }
+
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(28,43,54,0.08);
+    border: 2px solid transparent;
+  }
+  .card.current { border-color: var(--teal); }
+
+  .card-header {
+    background: var(--mist);
+    padding: 0.6rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-header .font-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+  .card-header .tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--teal);
+    color: white;
+  }
+  .card-header .tag.option { background: var(--gold); color: var(--ink); }
+
+  /* Preview area — mimics the services section background */
+  .card-preview {
+    padding: 2.5rem 2rem;
+    background: var(--white);
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card.current .card-preview { padding: 2.5rem 3rem; }
+
+  .eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--teal);
+    margin-bottom: 0.7rem;
+  }
+
+  .display-text {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+  .card.current .display-text { font-size: clamp(2.2rem, 4.5vw, 3.4rem); }
+
+  .body-line {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* Individual font assignments */
+  .f-fraunces    { font-family: 'Fraunces', serif; font-weight: 300; font-style: italic; }
+  .f-playfair    { font-family: 'Playfair Display', serif; font-weight: 400; font-style: italic; }
+  .f-dm-serif    { font-family: 'DM Serif Display', serif; font-weight: 400; font-style: italic; }
+  .f-cormorant   { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(2.4rem, 5vw, 3.6rem) !important; }
+  .f-instrument  { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; }
+  .f-lora        { font-family: 'Lora', serif; font-weight: 400; font-style: italic; }
+
+  .notes {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    padding: 0.85rem 1.25rem;
+    border-top: 1px solid var(--border);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  .notes strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<h1>Font Comparison — Gold Star Pediatrics</h1>
+<p class="subtitle">Showing "Care for every stage of childhood." in 5 display font options vs. the current Fraunces. All shown at matching weight + italic (how the heading renders on site).</p>
+
+<div class="grid">
+
+  <!-- CURRENT -->
+  <div class="card current">
+    <div class="card-header">
+      <span class="font-name">Fraunces — Light Italic (Current)</span>
+      <span class="tag">Current</span>
+    </div>
+    <div class="card-preview">
+      <div class="eyebrow">What We Offer ★</div>
+      <div class="display-text f-fraunces">Care for every stage<br>of childhood.</div>
+      <div class="body-line">From newborns to teens — Dr. Patel and our team are here for every milestone.</div>
+    </div>
+    <div class="notes"><strong>Fraunces:</strong> Optical-size variable serif. The soft italic gives it warmth and personality. Can read as slightly literary or vintage. Free on Google Fonts.</div>
+  </div>
+
+  <!-- OPTION A: Playfair Display -->
+  <div class="card">
+    <div class="card-header">
+      <span class="font-name">Playfair Display — Italic</span>
+      <span class="tag option">A</span>
+    </div>
+    <div class="card-preview">
+      <div class="eyebrow">What We Offer ★</div>
+      <div class="display-text f-playfair">Care for every stage<br>of childhood.</div>
+      <div class="body-line">From newborns to teens — Dr. Patel and our team are here for every milestone.</div>
+    </div>
+    <div class="notes"><strong>Playfair Display:</strong> High-contrast editorial serif. Classic, trustworthy, slightly more formal. The italic is sharp and confident. Popular in healthcare branding.</div>
+  </div>
+
+  <!-- OPTION B: DM Serif Display -->
+  <div class="card">
+    <div class="card-header">
+      <span class="font-name">DM Serif Display — Italic</span>
+      <span class="tag option">B</span>
+    </div>
+    <div class="card-preview">
+      <div class="eyebrow">What We Offer ★</div>
+      <div class="display-text f-dm-serif">Care for every stage<br>of childhood.</div>
+      <div class="body-line">From newborns to teens — Dr. Patel and our team are here for every milestone.</div>
+    </div>
+    <div class="notes"><strong>DM Serif Display:</strong> Clean, modern serif. Less ornate than Playfair, more refined than Fraunces. The italic flows naturally. Designed specifically for display sizes — pairs beautifully with Plus Jakarta Sans.</div>
+  </div>
+
+  <!-- OPTION C: Cormorant Garamond -->
+  <div class="card">
+    <div class="card-header">
+      <span class="font-name">Cormorant Garamond — Light Italic</span>
+      <span class="tag option">C</span>
+    </div>
+    <div class="card-preview">
+      <div class="eyebrow">What We Offer ★</div>
+      <div class="display-text f-cormorant">Care for every stage<br>of childhood.</div>
+      <div class="body-line">From newborns to teens — Dr. Patel and our team are here for every milestone.</div>
+    </div>
+    <div class="notes"><strong>Cormorant Garamond:</strong> Ultra-refined, thin-stroked, very elegant. Reads as premium and sophisticated. Best at larger sizes — can feel delicate at smaller sizes. Upscale feel.</div>
+  </div>
+
+  <!-- OPTION D: Instrument Serif -->
+  <div class="card">
+    <div class="card-header">
+      <span class="font-name">Instrument Serif — Italic</span>
+      <span class="tag option">D</span>
+    </div>
+    <div class="card-preview">
+      <div class="eyebrow">What We Offer ★</div>
+      <div class="display-text f-instrument">Care for every stage<br>of childhood.</div>
+      <div class="body-line">From newborns to teens — Dr. Patel and our team are here for every milestone.</div>
+    </div>
+    <div class="notes"><strong>Instrument Serif:</strong> Contemporary, clean, balanced contrast. Feels modern and editorial without being cold. Pairs exceptionally well with geometric sans-serifs like Plus Jakarta Sans.</div>
+  </div>
+
+  <!-- OPTION E: Lora -->
+  <div class="card">
+    <div class="card-header">
+      <span class="font-name">Lora — Italic</span>
+      <span class="tag option">E</span>
+    </div>
+    <div class="card-preview">
+      <div class="eyebrow">What We Offer ★</div>
+      <div class="display-text f-lora">Care for every stage<br>of childhood.</div>
+      <div class="body-line">From newborns to teens — Dr. Patel and our team are here for every milestone.</div>
+    </div>
+    <div class="notes"><strong>Lora:</strong> Warm, approachable, calligraphic roots. The most readable at smaller sizes. Feels friendly and trustworthy rather than editorial. Good if the priority is warmth over sophistication.</div>
+  </div>
+
+</div>
+</body>
+</html>

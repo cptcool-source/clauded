@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 112" width="210" height="112" role="img" aria-label="chuck design">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,800;1,300&amp;display=swap');
+      .wm-name { font-family: 'Outfit', system-ui, sans-serif; font-weight: 800; font-size: 56px; letter-spacing: -0.04em; }
+      .wm-word { font-family: 'Outfit', system-ui, sans-serif; font-weight: 300; font-style: italic; font-size: 56px; letter-spacing: -0.02em; }
+    </style>
+  </defs>
+  <text class="wm-name" x="0" y="54" fill="#F5F3EE">chuck</text>
+  <text class="wm-word" x="0" y="102" fill="#E05C3A">design</text>
+</svg>

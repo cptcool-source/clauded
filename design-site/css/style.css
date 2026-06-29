@@ -1,5 +1,5 @@
 /* ==========================================================================
-   fixedIT Tech — Design System
+   chuck design — Design System
    Direction C: Outfit (variable weight) · Geist Mono (utility) · Phosphor
    Palette: #FAFAF8 base · #111111 text · #E05C3A coral accent · dark hero
    ========================================================================== */
@@ -67,6 +67,9 @@ body::after {
   font-weight: 800;
   font-size: 18px;
   letter-spacing: -0.03em;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 .hero-title {
   font-family: 'Outfit', system-ui, sans-serif;
@@ -238,7 +241,7 @@ body::after {
 .nav-logo:hover { color: #fff; }
 .site-nav.scrolled .nav-logo { color: var(--text); }
 .site-nav.scrolled .nav-logo:hover { color: var(--accent); }
-.logo-accent { color: var(--accent); }
+.logo-accent { color: var(--accent); font-weight: 300; font-style: italic; letter-spacing: -0.01em; }
 
 /* Nav links */
 .nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; }
@@ -763,7 +766,7 @@ body::after {
   max-width: var(--max-w); margin: 0 auto;
   display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
 }
-.footer-logo { font-weight: 800; font-size: 15px; letter-spacing: -0.02em; color: var(--text); }
+.footer-logo { font-weight: 800; font-size: 15px; letter-spacing: -0.02em; color: var(--text); display: inline-flex; flex-direction: column; line-height: 1; }
 .footer-copy { font-size: 12px; color: var(--text-faint); margin-right: auto; }
 .footer-email { font-size: 12px; color: var(--text-faint); transition: color 0.2s; }
 .footer-email:hover { color: var(--accent); }
@@ -1094,3 +1097,54 @@ body::after {
 @media (max-width: 380px) {
   :root { --gutter: 16px; }
 }
+
+/* ── gpt-taste enhancements — micro-interactions ───────────────────────────
+   Constraint: no typography or color changes. Motion + hover only.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* About portrait: scale into view on hover (pairs with existing saturate) */
+.about__portrait-img {
+  transition: filter 0.45s, transform 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.about__portrait:hover .about__portrait-img {
+  filter: saturate(1);
+  transform: scale(1.04);
+}
+
+/* Work card icon: subtle lift + translate on hover */
+.work-card__icon {
+  transition: filter 0.3s, color 0.3s, transform 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+.work-card:hover .work-card__icon {
+  transform: translateY(-3px) scale(1.06);
+}
+
+/* Services card: slightly smoother, more cinematic easing */
+.svc-card {
+  transition: transform 0.42s cubic-bezier(0.16,1,0.3,1), box-shadow 0.42s, border-color 0.3s;
+}
+
+/* Portfolio card: longer, more cinematic easing */
+.portfolio-card {
+  transition: transform 0.48s cubic-bezier(0.16,1,0.3,1), box-shadow 0.48s, border-color 0.32s;
+}
+.portfolio-card__img {
+  transition: filter 0.48s, transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* Film slate: pause on hover — the marquee stills, readable on demand */
+.film-slate:hover .film-slate__track {
+  animation-play-state: paused;
+}
+
+/* Section sub copy: slight lag after title reveal for depth */
+.section-header.reveal-up.visible .section-sub {
+  animation: none;
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s var(--ease-out) 0.4s, transform 0.7s var(--ease-out) 0.4s;
+}
+
+/* Process step: subtle color warm-up on hover before activation */
+.process__step:not(.proc-active):hover .step__title { color: var(--text-muted); }
+.process__step:not(.proc-active):hover .step__node { border-color: rgba(224,92,58,0.4); }
